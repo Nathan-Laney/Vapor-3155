@@ -23,3 +23,11 @@ def all_games():
 @app.get('/profile.html')
 def profile():
     return render_template('profile.html') 
+
+@app.get('/post_review.html')
+def post_review():
+    return render_template('post_review.html') 
+
+@app.get('/gamepage.html')
+def gamepage():
+    return render_template('gamepage.html') 
