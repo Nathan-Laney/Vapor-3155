@@ -1,5 +1,53 @@
 {% extends '_layout.html' %}
 
 {% block body %}
-<h1>gamepage.html :)</h1>
+<h1 class="p-2">gamepage :)</h1>
+
+<div style="display:flex">
+    <div class="card w-10, h-10" style="float:left">
+        <img src="static/images/blackops.jpeg" alt="blackops" style="width: 250px; height: 400px;">
+        <div class="card-body">
+            <h5 class="card-title text-center">Call of Duty: Black Ops</h5>
+            <p class="card-text text-center">4.3/5</p>
+        </div>
+    </div>
+
+    <!--
+    <h4 class="mb-5">description: </h4>
+        <div class="log_output">
+            <p>Ambitioni dedisse scripsisse iudicaretur. Cras mattis iudicium purus sit amet fermentum. Donec sed odio operae, eu vulputate felis rhoncus. Praeterea iter est quasdam res quas ex communi. At nos hinc posthac, sitientis piros Afros. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Cras mattis iudicium purus sit amet fermentum.</p>
+        </div>
+    -->
+    
+    <div class="ms-3" class="flex-container">
+        <h4 class="mb-5">description: </h4>
+        <h5>tags: </h5>
+        <h5>rating: </h5>
+        <h5>replayability: </h5>
+        <h5>graphics: </h5>
+    </div>
+    
+</div>
+<div>
+    <h2 class="mt-5 mb-3">ratings</h2>
+
+    <div class="card w-10, h-10 mb-3">
+        <div class="card-body">
+            <h5 class="card-title text-left">rating 1</h5>
+            <h6 class="card-title text-right">user xy</h6>
+            <p class="card-text text-left">this game SUCKS!!</p>
+            <p class="card-text text-left"><strong>rating:</strong> 2.0 &nbsp <strong>replayability:</strong> 1.0 &nbsp <strong>graphics:</strong> 2.0</p> 
+        </div>
+    </div>
+
+    <div class="card w-10, h-10 mb-3">
+        <div class="card-body">
+            <h5 class="card-title text-left">rating 2</h5>
+            <h6 class="card-title text-right">user ab</h6>
+            <p class="card-text text-left">i would sell my firstborn to play this game again for the first time :)</p>
+            <p class="card-text text-left"><strong>rating:</strong> 4.0 &nbsp <strong>replayability:</strong> 5.0 &nbsp <strong>graphics:</strong> 3.0</p> 
+        </div>
+    </div>
+</div>
+
 {% endblock %}
