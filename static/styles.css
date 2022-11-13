@@ -1,0 +1,17 @@
+#user_symbol {
+    border: 3px solid #8abeb7;
+    background-color: #8abeb7;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    margin: auto;
+    text-align: center;
+}
+
+#vapor_logo {
+    /* Extrabold / H5 Heading */
+    font-style: normal;
+    font-weight: 900;
+    font-size: 20px;
+    line-height: 24px;
+}
