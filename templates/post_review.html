@@ -1,5 +1,44 @@
 {% extends '_layout.html' %}
 
 {% block body %}
-<h1>post_review.html :)</h1>
+<h1>Create a review</h1>
+<form action ="/" method="POST">
+    <div class="form-group">
+        <label class="form-label" for="gameTitle">Game Title</label>
+        <input class="form-control" type="text" id="gameTitle" name="gameTitle" placeholder="Enter title" required><br>
+    </div>
+    
+    <div class="form-group">
+        <label class="form-label" for="description">Description</label>
+        <input class="form-control" type="text" id="description" name="description" placeholder="Enter description" required><br><br>
+    </div>
+    
+    <h5>Enter ratings from 1-5: </h5>
+    <div class="container pt-4">
+        <label class="form-label" for="rating">Rating</label>
+        <input class="form-label" type="number" id="rating" name="rating" autocomplete="off" min="1" max="5">
+    </div>
+    
+    <div class="container pt-4">
+        <label for="replayability">Replayability</label>
+        <input type="number" id="replayability" name="replayability" autocomplete="off" min="1" max="5">
+    </div>
+    
+    <div class="container pt-4">
+        <label for="graphics">Graphics</label>
+        <input type="number" id="graphics" name="graphics" autocomplete="off" min="1" max="5"><br><br>
+    </div>
+    
+    <div class="form-check">
+        <input type="checkbox" id="inAppPurchases" name="inAppPurchases">
+        <label class="form-check-label" for="inAppPurchases">In app purchases?</label>
+    </div>
+    
+    <div class="form-check">
+        <input type="checkbox" id="recievedFreeCopy" name="recievedFreeCopy">
+        <label class="form-check-label" for="recievedFreeCopy">Recieved free copy?</label>
+    </div>
+    <br><button type="submit" class="btn btn-primary">Submit</button>
+    <div class="container pt-4"></div>
+</form>
 {% endblock %}
