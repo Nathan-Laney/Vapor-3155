@@ -1,5 +1,47 @@
 {% extends '_layout.html' %}
 
+<!-- thanks krevat <3 -->
+
+{% block title %}Search Games{% endblock %}
+
 {% block body %}
-<h1>search.html :)</h1>
+<h1 class="mb-5">search games</h1>
+<form action="/search" method="get" class="mb-5">
+  <label for="q" class="form-label">search by title</label>  
+  <div class="input-group">
+    <input type="text" name="q" id="q" class="form-control" autocomplete="off" required>
+    <div class="input-group-append">
+      <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+    </div>
+</form>
+
+<!-- If q is passed to the template, we did a search already -->
+{% if search_query != '' %}
+{% if games|length != 0 %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Developer</th>
+      <th>Rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for game in games %}
+      <tr>
+        <!-- <td><a href="/games/{{ game.game_id }}">{{ game.title }}</a></td>
+        <td>{{ game.director }}</td>
+        <td>{{ game.rating }}</td> -->
+        <td>Portal</td>
+        <td>Valve</td>
+        <td>4.9/5</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No games found</p>
+{% endif %}
+{% endif %}
 {% endblock %}
