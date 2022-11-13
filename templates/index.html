@@ -1,5 +1,54 @@
 {% extends '_layout.html' %}
 
 {% block body %}
-<h1>index.html :)</h1>
+<h2 class="p-2">highest rated games</h2>
+
+<div class="row p-5">
+  {% for num in range (1,7) %}
+    <div class="col-sm-2">
+      <div class="card w-65" >
+        
+        <img src="/static/images/portal.jpeg" alt="portal">
+        <div class="card-body">
+          <h5 class="card-title text-center">Portal</h5>
+          <p class="card-text text-center">4.9/5</p>
+        </div>
+      </div>
+    </div>
+
+{% endfor %}
+</div>
+<h2 class="p-2">our picks</h2>
+<div class="row p-5">
+  {% for num in range (1,7) %}
+
+    <div class="col-sm-2">
+      <div class="card w-65" >
+        
+        <img src="/static/images/portal.jpeg" alt="portal">
+        <div class="card-body">
+          <h5 class="card-title text-center">Portal</h5>
+          <p class="card-text text-center">4.9/5</p>
+        </div>
+      </div>
+    </div>
+
+{% endfor %}
+</div>
+<h2 class="p-2"s>your backlog</h2>
+<div class="row p-5">
+  {% for num in range (1,7) %}
+    <div class="col-sm-2">
+      <div class="card w-65" >
+        
+        <img src="/static/images/portal.jpeg" alt="portal">
+        <div class="card-body">
+          <h5 class="card-title text-center">Portal</h5>
+          <p class="card-text text-center">4.9/5</p>
+        </div>
+      </div>
+    </div>
+
+{% endfor %}
+</div>
 {% endblock %}
