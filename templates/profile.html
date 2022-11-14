@@ -1,5 +1,54 @@
 {% extends '_layout.html' %}
 
 {% block body %}
-<h1>profile.html :)</h1>
+<div id="master-div">
+    <h1 class="margin-para vapor-color profile-margin">Kat_Fletcher02</h1>
+<img class="pfp-image-circle margin-para pfp-margin" src="./static/images/kat_pfp.png">
+<div class="card text-center margin-para margin-right profile-margin">
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="true" href="#">Bio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" aria-current="true" href="#">My games</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" aria-current="true" href="#">My Reviews</a>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title bio-title vapor-color">Kat_Fletcher02's Bio</h5>
+      <p class="card-text bio-text">Sample text</p>
+      <h5 class="card-title bio-title vapor-color">Kat_Fletcher02's Top 3 Games</h5>
+      <div class="top-games-card-group">
+        <div>
+            <div class="card w-10, h-10">
+                <img src="./static/images/minecraft.png" alt="Minecraft" style="width: 250px; height: 250px;">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Minecraft</h5>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="card w-10, h-10">
+                <img src="./static/images/animal_crossing.png" alt="Animal Crossing: Wii" style="width: 250px; height: 250px;">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Animal Crossing: Wii</h5>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="card w-10, h-10">
+                <img src="./static/images/dead_by_daylight.png" alt="Dead by Daylight" style="width: 250px; height: 250px;">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Dead by Deadlight</h5>
+                </div>
+            </div>
+        </div>
+      </div>
+  </div>
+  </div>
+</div>
 {% endblock %}
