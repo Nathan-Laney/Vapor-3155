@@ -2,6 +2,10 @@
     display: flex;
     justify-content: space-around;
 }
+.top-games-card-group {
+    display: flex;
+    justify-content: space-around;
+}
 .staff-img-wh {
     height: 250px;
     width: 250px;
@@ -9,8 +13,34 @@
 .margin-para {
     margin-left: 4rem;
 }
+.margin-right {
+    margin-right: 10rem;
+}
 .padding-info {
     padding: 10px;
+}
+
+.pfp-image-circle {
+    border-radius: 50%;
+    width: 150px;
+    height:150px;
+}
+.bio-title {
+    text-align: left;
+}
+.bio-text {
+    text-align: left;
+}
+.vapor-color {
+    color: #8abeb7;
+}
+.profile-margin {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+.pfp-margin{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 #user_symbol {
@@ -29,5 +59,4 @@
     font-weight: 900;
     font-size: 20px;
     line-height: 24px;
-
 }
