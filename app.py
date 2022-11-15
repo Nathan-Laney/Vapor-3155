@@ -31,8 +31,9 @@ def about():
 
 @app.get('/search')
 def search():
+    q = request.args.get('q', '')
     current_page = "search"
-    return render_template('search.html') 
+    return render_template('search.html', search_query=q) 
 
 @app.get('/all_games')
 def all_games():

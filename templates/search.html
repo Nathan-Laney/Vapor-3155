@@ -1,5 +1,33 @@
 {% extends '_layout.html' %}
 
+<!-- thanks krevat <3 -->
+
+{% block title %}Search Games{% endblock %}
+
 {% block body %}
-<h1>search.html :)</h1>
+<h1 class="mb-5">search games</h1>
+<form action="/search" method="get" class="mb-5">
+  <label for="q" class="form-label">search by title</label>  
+  <div class="input-group">
+    <input type="text" name="q" id="q" class="form-control" autocomplete="off" required>
+    <div class="input-group-append">
+      <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+    </div>
+</form>
+
+{% if search_query != '' %}
+<div class="d-flex justify-content-center">
+  <div class="card" style="width:18em">
+    <img class="card-img-top" src="/static/images/portal.jpeg" alt="portal">
+    <div class="card-body">
+      <h5 class="card-title text-center">Portal</h5>
+      <p class="card-text text-center">4.9/5</p>
+    </div>
+  </div>
+</div>
+{% else %}
+<p>No games found</p>
+
+{% endif %}
 {% endblock %}
