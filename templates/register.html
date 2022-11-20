@@ -1,0 +1,17 @@
+{% extends '_layout.html' %}
+
+{% block body %}
+<h2 class="mb-5">Login to Your account</h2>
+
+<form action="/register" method="POST">
+    <label for="first_name">First Name</label><br>
+    <input type="text" id="first_Name" name="first_Name" required><br><br>
+    <label for="username">User Name</label><br>
+    <input type="text" id="username" name="username" required><br><br>
+    <label for="email">Email</label><br>
+    <input type="email" id="email" name="email" required><br><br>
+    <label for="password">Password</label><br>
+    <input type="password" id="password" name="password" required><br><br>
+    <button type="submit" class="btn btn-primary">Sign Up</button><br>
+</form>
+{% endblock %}
