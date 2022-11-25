@@ -1,8 +1,19 @@
 # Nathan Laney, Kaitlyn Finberg, Sumi Verma, Tyler Minnis, Honna Sammos
-from flask import Flask, render_template, request, redirect
+from dotenv import load_dotenv
+from flask import Flask, render_template, request, redirect, session
+from flask_bcrypt import Bcrypt
+from models import db, User
 import os
 
+load_dotenv()
+
 app = Flask(__name__) 
+
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
+app.secret_key = os.getenv('APP_SECRET_KEY')
+
+db.init_app(app)
+bcrypt = Bcrypt(app)
 
 page_index = {
     1   :   "index",
@@ -54,6 +65,72 @@ def post_review():
 def gamepage():
     current_page = "gamepage"
     return render_template('gamepage.html') 
+
+#This is the start of the login in logic
+
+@app.get('/login')
+def login():
+    current_page = "login"
+    return render_template('login.html') 
+
+@app.post('/login')
+def loginform():
+    password = request.form.get('password')
+    email = request.form.get('email')
+
+    existing_user = User.query.filter_by(email=email).first()
+
+    if not existing_user:
+        return redirect('/login')
+
+    if not bcrypt.check_password_hash(existing_user.password, password):
+        return redirect('/login')
+
+    session['user'] = {
+        'user_id': existing_user.user_id
+    }
+    return redirect('/youGotIn')
+#this is a post... you might have to make a get so that the page will load.....
+
+@app.get('/youGotIn')
+def temp():
+    return render_template('youGotIn.html')
+
+
+@app.get('/register')
+def register():
+    current_page = "register"
+    return render_template('register.html') 
+
+@app.post('/register')
+def registerForm():
+    username = request.form.get('user_name')
+    password = request.form.get('password')
+    first_name = request.form.get('first_name')
+    email = request.form.get('email')
+    existing_user = User.query.filter_by(username=username).first()
+    existing_email = User.query.filter_by(email=email).first()
+
+    if(existing_email and existing_user):
+        return redirect('/login')
+ 
+    hashed_bytes = bcrypt.generate_password_hash(password, int(os.getenv('BCRYPT_ROUNDS')))
+    hashed_password = hashed_bytes.decode('utf-8')
+
+    new_user = User(username, hashed_password, first_name, email)
+    db.session.add(new_user)
+    db.session.commit()
+    return redirect('/login')
+
+@app.get('/resetPassword')
+def resetPassword():
+    current_page = "resetPassword"
+    return render_template('resetPassword.html')
+
+@app.post('/logout')
+def logout():
+    session.pop('user')
+    return redirect('/')
 
 if __name__ == '__main__':
     app.run()

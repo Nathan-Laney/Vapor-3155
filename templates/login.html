@@ -1,12 +1,22 @@
 {% extends '_layout.html' %}
 
+{% block body %}
+<h2 class="mb-5">Login to Your account</h2>
 
-
-
-<form action="/" method="POST">
+<form action="/login" method="POST">
     <label for="email">Email</label><br>
     <input type="email" id="email" name="email" required><br><br>
     <label for="password">Password</label><br>
     <input type="password" id="password" name="password" required><br><br>
-    <button>Login</button><br>
+    <button type="submit" class="btn btn-primary">Login</button><br>
 </form>
+<br>
+<br>
+<br>
+<a href="register"> 
+    <button class="btn btn-primary">Create an account</button>
+</a>
+<a href="resetPassword"> 
+    <button class="btn btn-primary">Forgot password?</button>
+</a>
+{% endblock %}
