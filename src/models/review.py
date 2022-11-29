@@ -2,7 +2,7 @@ from models import db
 from datetime import datetime
 # from sqlalchemy.dialects.postgresql import JSON
 
-class Review(db.Model):
+class review(db.Model):  # type: ignore
     __tablename__ = 'review'
     
     review_id =             db.Column(db.Integer, primary_key=True)
