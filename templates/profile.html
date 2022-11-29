@@ -2,8 +2,11 @@
 
 {% block body %}
 <div id="master-div">
-    <h1 class="margin-para vapor-color profile-margin">Kat_Fletcher02</h1>
-<img class="pfp-image-circle margin-para pfp-margin" src="./static/images/kat_pfp.png">
+    <h1 class="margin-para vapor-color profile-margin">
+      Hello {{ current_user.first_name }}!
+    </h1>
+<img class="pfp-image-circle margin-para pfp-margin" src="./static/profile-pics/{{ profile_path }}" alt="profile-picture">
+<h4 class="margin-para gray-color profile-margin">{{ current_user.username }}</h4>
 <div class="card text-center margin-para margin-right profile-margin">
     <div class="card-header">
       <ul class="nav nav-tabs card-header-tabs">
@@ -19,9 +22,9 @@
       </ul>
     </div>
     <div class="card-body">
-      <h5 class="card-title bio-title vapor-color">Kat_Fletcher02's Bio</h5>
+      <h5 class="card-title bio-title vapor-color">{{ current_user.first_name }}'s Bio</h5>
       <p class="card-text bio-text">Sample text</p>
-      <h5 class="card-title bio-title vapor-color">Kat_Fletcher02's Top 3 Games</h5>
+      <h5 class="card-title bio-title vapor-color">{{ current_user.first_name }}'s Top 3 Games</h5>
       <div class="top-games-card-group">
         <div>
             <div class="card w-10, h-10">
