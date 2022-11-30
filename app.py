@@ -6,8 +6,6 @@ import os
 from models import db
 from src.models.user import User
 from werkzeug.utils import secure_filename
-load_dotenv()
-
 
 # Imports for our database tables. These are in a specific order, 
 # to correctly populate the foreign keys. 
