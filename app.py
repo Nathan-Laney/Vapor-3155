@@ -97,7 +97,9 @@ def post_review():
 @app.get('/gamepage')
 def gamepage():
     current_page = "gamepage"
-    return render_template('gamepage.html')
+    #single_game = game_repository.get_game_by_id(game_id)
+    #existing_game = Game.query.filter_by(single_game=single_game).first()
+    return render_template('gamepage.html') #existing_game=existing_game
 
 # This is the start of the login in logic
 
