@@ -6,6 +6,9 @@ import os
 from models import db
 from src.models.user import User
 from werkzeug.utils import secure_filename
+from src.models.game import game 
+from src.repositories.game_repository import game_repository_singleton
+
 
 # Imports for our database tables. These are in a specific order, 
 # to correctly populate the foreign keys. 
@@ -68,8 +71,9 @@ def about():
 def search():
     q = request.args.get('q', '')
     current_page = "search"
+    # this isn't working -> need to also set it up w/ correct database
+    # title = game_repository_singleton.get_game_by_title(title = q) 
     return render_template('search.html', search_query=q)
-
 
 @app.get('/all_games')
 def all_games():
