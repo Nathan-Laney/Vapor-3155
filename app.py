@@ -4,10 +4,27 @@ from flask import Flask, render_template, request, redirect, session
 from flask_bcrypt import Bcrypt
 import os
 from models import db
+<<<<<<< HEAD
 from src.models.user import User
 from werkzeug.utils import secure_filename
 load_dotenv()
+=======
+>>>>>>> main
 
+# Imports for our database tables. These are in a specific order, 
+# to correctly populate the foreign keys. 
+# Having these imports allows for them to be created on flask run
+# if they do not already exist
+from src.models.user_data import user_data
+from src.models.game import game
+from src.models.tag import tag
+from src.models.tag_game import tag_game
+from src.models.review import review
+from src.models.user_favorites import user_favorites
+from src.models.game_review import game_review
+
+
+load_dotenv()
 app = Flask(__name__)
 
 print(os.getenv('SQLALCHEMY_DATABASE_URI'))
@@ -17,6 +34,8 @@ app.secret_key = os.getenv('APP_SECRET_KEY')
 
 db.init_app(app)
 bcrypt = Bcrypt(app)
+
+# Creates tables that do not exist
 with app.app_context():
     db.create_all()
 
@@ -100,7 +119,7 @@ def loginform():
     print(email)
     print(password)
 
-    existing_user = User.query.filter_by(email=email).first()
+    existing_user = user_data.query.filter_by(email=email).first()
 
     if not existing_user:
         return redirect('/login')
@@ -135,8 +154,8 @@ def registerForm():
     password = request.form.get('password')
     first_name = request.form.get('first_name')
     email = request.form.get('email')
-    existing_user = User.query.filter_by(username=username).first()
-    existing_email = User.query.filter_by(email=email).first()
+    existing_user = user_data.query.filter_by(username=username).first()
+    existing_email = user_data.query.filter_by(email=email).first()
 
     if (existing_email and existing_user):
         return redirect('/login')
@@ -172,6 +191,7 @@ def registerForm():
 
     #added username=username, password=hashed_password, etc bc it wouldnt work without it
     new_user = User(username=username, password=hashed_password, first_name=first_name, email=email, profile_path=safe_filename)
+
     db.session.add(new_user)
     db.session.commit()
     return redirect('/login')

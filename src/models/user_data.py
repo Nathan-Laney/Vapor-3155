@@ -1,7 +1,7 @@
 from models import db
 
-class User(db.Model): 
-    __tablename__ = 'user'
+class user_data(db.Model):   # type: ignore
+    __tablename__ = 'user_data'
 
     user_id =       db.Column(db.Integer, primary_key=True)
     username =      db.Column(db.String, nullable=False)
