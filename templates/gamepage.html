@@ -1,17 +1,16 @@
 {% extends '_layout.html' %}
 
 {% block body %}
-<h1 class="p-2">gamepage :)</h1>
+<h1 class="p-2">gamepage</h1>
 
 <div style="display:flex">
     <div class="card w-10, h-10" style="float:left">
-        <img src="static/images/blackops.jpeg" alt="blackops" style="width: 250px; height: 400px;">
+        <img src="static/images/blackops.jpeg" style="width: 250px; height: 400px;">
         <div class="card-body">
-            <h5 class="card-title text-center">Call of Duty: Black Ops</h5>
-            <p class="card-text text-center">4.3/5</p>
+            <h5 class="card-title text-center">COD</h5>
+            <p class="card-text text-center">4</p>
         </div>
     </div>
-
     <!--
     <h4 class="mb-5">description: </h4>
         <div class="log_output">
@@ -20,16 +19,48 @@
     -->
     
     <div class="ms-3" class="flex-container">
-        <h4 class="mb-5">description: </h4>
+        <h4 class="mb-5">description:</h4>
+        <h5>publisher: </h5>
+        <h5>developer: </h5>
         <h5>tags: </h5>
         <h5>rating: </h5>
         <h5>replayability: </h5>
-        <h5>graphics: </h5>
+        <h5>graphics: </h5> 
     </div>
     
 </div>
 <div>
     <h2 class="mt-5 mb-3">ratings</h2>
+
+<section style="background-color: #8abeb7;">
+    <div class="container my-5 py-5 text-dark">
+        <div class="card w-10, h-10 mb-3">
+            <div class="card-body p-1">
+                <div class="d-flex flex-start w-100 mt-3">
+                <img class="rounded-circle shadow-1-strong me-3"
+                    src="../static/images/kat_pfp.png" alt="avatar" width="60"
+                    height="60" />
+                <div class="w-100">
+                    <h5>Leave a Review</h5>
+                    <div class="form-group">
+                    <textarea class="form-control" id="textAreaExample" rows="4"></textarea>
+                    <div class="mt-4">
+                    <label class="form-label" for="rating">Rating</label>
+                    <input class="form-label" type="number" id="rating" name="rating" autocomplete="off" min="1" max="5">    
+                    <label for="replayability">Replayability</label>
+                    <input type="number" id="replayability" name="replayability" autocomplete="off" min="1" max="5">
+                    <label for="graphics">Graphics</label>
+                    <input type="number" id="graphics" name="graphics" autocomplete="off" min="1" max="5"><br><br>
+                </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button class="btn btn-success me-md-2" type="button">Submit</button>
+                </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+      
 
     <div class="card w-10, h-10 mb-3">
         <div class="card-body">
@@ -48,6 +79,7 @@
             <p class="card-text text-left"><strong>rating:</strong> 4.0 &nbsp <strong>replayability:</strong> 5.0 &nbsp <strong>graphics:</strong> 3.0</p> 
         </div>
     </div>
+</section>
 </div>
 
 {% endblock %}
