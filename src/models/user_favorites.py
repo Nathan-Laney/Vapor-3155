@@ -11,8 +11,3 @@ class user_favorites(db.Model):  # type: ignore
 
     game_id =        db.Column(db.Integer, db.ForeignKey("game.game_id", ondelete="CASCADE", onupdate="CASCADE"), primary_key = True)
     game_rel = db.relationship("game", backref = "game")
-
-
-    def __init__(self, user_id:int, game_id:int) -> None:
-        self.user_id = user_id
-        self.game_id = game_id

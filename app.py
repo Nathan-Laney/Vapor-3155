@@ -10,13 +10,8 @@ from models import db
 # Having these imports allows for them to be created on flask run
 # if they do not already exist
 from src.models.user_data import user_data
-from src.models.game import game
-from src.models.tag import tag
-from src.models.tag_game import tag_game
-from src.models.review import review
-from src.models.user_favorites import user_favorites
-from src.models.game_review import game_review
 
+from src.repositories.tag_repository import tag_repository_singleton
 
 load_dotenv()
 app = Flask(__name__)
@@ -31,65 +26,50 @@ bcrypt = Bcrypt(app)
 
 # Creates tables that do not exist
 with app.app_context():
-    db.create_all()
-
-page_index = {
-    1:   "index",
-    2:   "about",
-    3:   "all_games",
-    4:   "search",
-    5:   "other"
-}
-
-current_page = "index"
-
+    # # db.create_all()
+    all_tags = tag_repository_singleton.get_all_tags()
+    print("____________________________________________________")
+    print(all_tags)
+    print("____________________________________________________")
 
 @app.get('/')
 def index():
-    current_page = "index"
     return render_template('index.html')
 
 
 @app.route('/header')
 def header():
-    current_page = "index"
     return render_template('index.html')
 
 
 @app.get('/about')
 def about():
-    current_page = "about"
     return render_template('about.html')
 
 
 @app.get('/search')
 def search():
     q = request.args.get('q', '')
-    current_page = "search"
     return render_template('search.html', search_query=q)
 
 
 @app.get('/all_games')
 def all_games():
-    current_page = "all_games"
     return render_template('all_games.html')
 
 
 @app.get('/profile')
 def profile():
-    current_page = "profile"
     return render_template('profile.html')
 
 
 @app.get('/post_review')
-def post_review():
-    current_page = "post_review"
+def post_review():    
     return render_template('post_review.html')
 
 
 @app.get('/gamepage')
-def gamepage():
-    current_page = "gamepage"
+def gamepage():    
     return render_template('gamepage.html')
 
 # This is the start of the login in logic
@@ -97,7 +77,6 @@ def gamepage():
 
 @app.get('/login')
 def login():
-    current_page = "login"
     return render_template('login.html')
 
 
@@ -132,36 +111,35 @@ def register():
     return render_template('register.html')
 
 
-@app.post('/register')
-def registerForm():
-    username = request.form.get('user_name')
-    password = request.form.get('password')
-    first_name = request.form.get('first_name')
-    email = request.form.get('email')
-    existing_user = user_data.query.filter_by(username=username).first()
-    existing_email = user_data.query.filter_by(email=email).first()
+# @app.post('/register')
+# def registerForm():
+#     username = request.form.get('user_name')
+#     password = request.form.get('password')
+#     first_name = request.form.get('first_name')
+#     email = request.form.get('email')
+#     existing_user = user_data.query.filter_by(username=username).first()
+#     existing_email = user_data.query.filter_by(email=email).first()
 
-    if (existing_email and existing_user):
-        return redirect('/login')
+#     if (existing_email and existing_user):
+#         return redirect('/login')
 
-    bcryptRounds = os.getenv('BCRYPT_ROUNDS')
-    if bcryptRounds == 'None':
-        print("Defaulting bcryptRounds (error)")
-        bcryptRounds = 20000 # If bcrypt rounds is not found, falls back to default value of 20k
+#     bcryptRounds = os.getenv('BCRYPT_ROUNDS')
+#     if bcryptRounds == 'None':
+#         print("Defaulting bcryptRounds (error)")
+#         bcryptRounds = 20000 # If bcrypt rounds is not found, falls back to default value of 20k
 
-    hashed_bytes = bcrypt.generate_password_hash(
-        password, bcryptRounds)
-    hashed_password = hashed_bytes.decode('utf-8')
+#     hashed_bytes = bcrypt.generate_password_hash(
+#         password, bcryptRounds)
+#     hashed_password = hashed_bytes.decode('utf-8')
 
-    new_user = user_data(username, hashed_password, first_name, email)
-    db.session.add(new_user)
-    db.session.commit()
-    return redirect('/login')
+#     new_user = user_data(username, hashed_password, first_name, email)
+#     db.session.add(new_user)
+#     db.session.commit()
+#     return redirect('/login')
 
 
 @app.get('/resetPassword')
 def resetPassword():
-    current_page = "resetPassword"
     return render_template('resetPassword.html')
 
 
