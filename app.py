@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, redirect, session
 from flask_bcrypt import Bcrypt
 import os
 from models import db
+from datetime import date, datetime
 
 # Imports for our database tables. These are in a specific order, 
 # to correctly populate the foreign keys. 
@@ -26,21 +27,21 @@ app.secret_key = os.getenv('APP_SECRET_KEY')
 db.init_app(app)
 bcrypt = Bcrypt(app)
 
-# Creates tables that do not exist
-# with app.app_context():
-    # db.create_all()
+with app.app_context():
+    db.create_all()
     
-    # print("____________________DEBUG_____________________")
-    # all_tags = tag_repository_singleton.get_all_tags()
-    # print(all_tags)
-    # # for i in all_tags:
-    # #     print(i.tag_description)
+    print("____________________DEBUG_____________________")
+    all_tags = tag_repository_singleton.get_all_tags()
+    print(all_tags)
+    # for i in all_tags:
+    #     print(i.tag_description)
     
-    # all_users = user_repository_singleton.get_all_users()
-    # print(all_users)
-    # asdhhdsa = game_repository_singleton.get_all_games()
-    # print(asdhhdsa)
-    # print("____________________________________________________")
+    all_users = user_repository_singleton.get_all_users()
+    print(all_users)
+    doom = game_repository_singleton.create_game_without_an_id("DOOM", "idSoftware", "the classic shooter but in 2016 graphics", "idSoftware", "www.google.com", date.today())
+    asdhhdsa = game_repository_singleton.get_all_games()
+    print(asdhhdsa)
+    print("____________________________________________________")
 
 @app.get('/')
 def index():

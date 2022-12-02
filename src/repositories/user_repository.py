@@ -21,8 +21,9 @@ class UserRepository:
         return found_user
 
     def create_user(self, username: str, email: str, password: str, first_name: str) -> user_data:
-        one_user = user_data(username, email, password, first_name)
-        db.append(one_user)
+        one_user = user_data(username=username, email=email, password=password, first_name=first_name)
+        db.session.add(one_user)
+        db.session.commit()
         return one_user
 
 

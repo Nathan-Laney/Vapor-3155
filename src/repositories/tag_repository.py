@@ -23,7 +23,7 @@ class TagRepository:
         db.session.commit()
         return new_tag
 
-    def search_tag_by_description(self, title) -> list[tag]:
+    def search_tag_by_description(self, title:str) -> list[tag]:
         found_tags: list[tag] = tag.query.filter(tag.tag_description.ilike(f'%{title}%')).all()
         return found_tags
 

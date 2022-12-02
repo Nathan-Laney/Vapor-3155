@@ -1,6 +1,6 @@
 from src.models.game import game
 from models import db
-from datetime import datetime
+from datetime import date
 
 
 # credit Krevat for code inspo
@@ -20,14 +20,22 @@ class GameRepository:
         all_games: list[game] = game.query.all()
         return all_games
 
-    def search_games_by_title(self, title) -> list[game]:
+    def search_games_by_title(self, title:str) -> list[game]:
         found_games: list[game] = game.query.filter(game.title.ilike(f'%{title}%')).all()
         return found_games
 
-    def create_game(self, game_id: int, title: str,  publisher: str, description: str, developer: str, thumbnail_link: str, release_date: datetime) -> game:
+    def create_game(self, game_id: int, title: str,  publisher: str, description: str, developer: str, thumbnail_link: str, release_date: date) -> game:
         # (self, title: str,  publisher: str, description: str, developer: str, thumbnail_link: str, release_date: datetime)
-        one_game = game(game_id, title, publisher, description, developer, thumbnail_link, release_date)
-        db.append(one_game)
+        one_game = game(game_id=game_id, title=title, publisher=publisher, description=description, developer=developer, thumbnail_link=thumbnail_link, release_date=release_date)
+        db.session.add(one_game)
+        db.session.commit()
+        return one_game
+    
+    def create_game_without_an_id(self, title: str,  publisher: str, description: str, developer: str, thumbnail_link: str, release_date: date) -> game:
+        # (self, title: str,  publisher: str, description: str, developer: str, thumbnail_link: str, release_date: datetime)
+        one_game = game(title=title, publisher=publisher, description=description, developer=developer, thumbnail_link=thumbnail_link, release_date=release_date)
+        db.session.add(one_game)
+        db.session.commit()
         return one_game
 
 # Singleton to be used in other modules
