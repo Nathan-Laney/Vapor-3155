@@ -12,6 +12,8 @@ from models import db
 from src.models.user_data import user_data
 
 from src.repositories.tag_repository import tag_repository_singleton
+from src.repositories.game_repository import game_repository_singleton
+from src.repositories.user_repository import user_repository_singleton
 
 load_dotenv()
 app = Flask(__name__)
@@ -25,12 +27,20 @@ db.init_app(app)
 bcrypt = Bcrypt(app)
 
 # Creates tables that do not exist
-with app.app_context():
-    # # db.create_all()
-    all_tags = tag_repository_singleton.get_all_tags()
-    print("____________________________________________________")
-    print(all_tags)
-    print("____________________________________________________")
+# with app.app_context():
+    # db.create_all()
+    
+    # print("____________________DEBUG_____________________")
+    # all_tags = tag_repository_singleton.get_all_tags()
+    # print(all_tags)
+    # # for i in all_tags:
+    # #     print(i.tag_description)
+    
+    # all_users = user_repository_singleton.get_all_users()
+    # print(all_users)
+    # asdhhdsa = game_repository_singleton.get_all_games()
+    # print(asdhhdsa)
+    # print("____________________________________________________")
 
 @app.get('/')
 def index():

@@ -1,34 +1,30 @@
 from src.models.user_data import user_data
-_user_repo = None
+from models import db
 
-#credit Krevat for code inspo
-def get_user_repository():
-    global _user_repo
+# credit Krevat for code inspo 
 
-    class GameRepository:
-        """Game holds title, developer, and rating"""
-        # these eventually need to be changed to SQLAlchemy queries
-        def __init__(self) -> None:
-            self._db: list[user_data] = []
+    # USER_DATA HOLDS: 
+    # user_id =       db.Column(db.Integer, primary_key=True)
+    # username =      db.Column(db.String, nullable=False)
+    # email =         db.Column(db.String, nullable=False)
+    # password =      db.Column(db.String, nullable=False)
+    # first_name =    db.Column(db.String, nullable=False)
 
-        def get_all_users(self, users):
-            return self._db
+class UserRepository:
 
-        def get_user_by_title(self, title: str) -> user_data | None:
-            """Get a single user by its title or None if it does not exist"""
-            for one_user in self._db:
-                if one_user.title == title:
-                    return one_user
-            return None
+    def get_all_users(self):
+        all_users: list[user_data] = user_data.query.all()
+        return all_users
 
-        def create_user(self, username:str, email:str, password:str, first_name:str) -> user_data:
-            """Create a new user and return it"""
-            # (self, title: str,  publisher: str, description: str, developer: str, thumbnail_link: str, release_date: datetime)
-            one_user = user_data(username, email, password, first_name)
-            self._db.append(one_user)
-            return one_user
+    def get_user_by_id(self, user_id: int) -> user_data:
+        found_user: user_data = user_data.query.get_or_404(user_id)
+        return found_user
 
-    if _user_repo is None:
-        _user_repo = GameRepository()
-    
-    return _user_repo
+    def create_user(self, username: str, email: str, password: str, first_name: str) -> user_data:
+        one_user = user_data(username, email, password, first_name)
+        db.append(one_user)
+        return one_user
+
+
+# Singleton to be used in other modules
+user_repository_singleton = UserRepository()

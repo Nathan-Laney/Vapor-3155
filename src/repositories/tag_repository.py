@@ -1,8 +1,13 @@
 from src.models.tag import tag
 from models import db
 
+# credit Krevat for code inspo 
 
-class tagRepository:
+    # TAG HOLDS:
+    # tag_id =            db.Column(db.Integer, primary_key=True)
+    # tag_description =   db.Column(db.String, nullable=True)
+
+class TagRepository:
 
     def get_all_tags(self) -> list[tag]:
         all_tags: list[tag] = tag.query.all()
@@ -18,10 +23,10 @@ class tagRepository:
         db.session.commit()
         return new_tag
 
-    def search_tags(self, title) -> list[tag]:
-        found_tags: list[tag] = tag.query.filter(tag.title.ilike(f'%{title}%')).all()
+    def search_tag_by_description(self, title) -> list[tag]:
+        found_tags: list[tag] = tag.query.filter(tag.tag_description.ilike(f'%{title}%')).all()
         return found_tags
 
 
 # Singleton to be used in other modules
-tag_repository_singleton = tagRepository()
+tag_repository_singleton = TagRepository()
