@@ -21,11 +21,13 @@ class UserRepository:
         return found_user
 
     def create_user(self, username: str, email: str, password: str, first_name: str) -> user_data:
-        one_user = user_data(username=username, email=email, password=password, first_name=first_name)
-        db.session.add(one_user)
-        db.session.commit()
-        return one_user
-
-
+        exists = db.session.query(user_data.user_id).filter_by(email = email).first()
+        if (exists is not None):
+            return exists
+        else:
+            one_user = user_data(username=username, email=email, password=password, first_name=first_name)
+            db.session.add(one_user)
+            db.session.commit()
+            return one_user
 # Singleton to be used in other modules
 user_repository_singleton = UserRepository()

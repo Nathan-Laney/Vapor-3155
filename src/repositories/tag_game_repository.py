@@ -25,10 +25,14 @@ class TagGameRepository:
         return matches
 
     def create_tag_game(self, tag_id:int, game_id:int) -> tag_game:
-        created_review = tag_game(tag_id=tag_id, game_id=game_id)
-        db.session.add(created_review)
-        db.session.commit()
-        return created_review
+        exists = db.session.query(tag_game.tag_id).filter_by(game_id = game_id, tag_id = tag_id).first()
+        if (exists is not None):
+            return exists
+        else:
+            created_review = tag_game(tag_id=tag_id, game_id=game_id)
+            db.session.add(created_review)
+            db.session.commit()
+            return created_review
 
 # Singleton to be used in other modules
 tag_game_repository_singleton = TagGameRepository()

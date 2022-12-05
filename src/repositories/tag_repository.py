@@ -17,11 +17,25 @@ class TagRepository:
         found_tag: tag = tag.query.get_or_404(tag_id)
         return found_tag
 
-    def create_tag(self, tag_description:str) -> tag:
-        new_tag = tag(tag_description=tag_description)
-        db.session.add(new_tag)
-        db.session.commit()
-        return new_tag
+    def create_tag(self, tag_id:int, tag_description:str) -> tag:
+        exists = db.session.query(tag.tag_id).filter_by(tag_id = tag_id).first()
+        if (exists is not None):
+            return exists
+        else:
+            new_tag = tag(tag_id = tag_id, tag_description=tag_description)
+            db.session.add(new_tag)
+            db.session.commit()
+            return new_tag
+
+    def create_tag_without_an_id(self, tag_description:str) -> tag:
+        exists = db.session.query(tag.tag_id).filter_by(tag_description = tag_description).first()
+        if (exists is not None):
+            return exists
+        else:
+            new_tag = tag(tag_description=tag_description)
+            db.session.add(new_tag)
+            db.session.commit()
+            return new_tag 
 
     def search_tag_by_description(self, title:str) -> list[tag]:
         found_tags: list[tag] = tag.query.filter(tag.tag_description.ilike(f'%{title}%')).all()

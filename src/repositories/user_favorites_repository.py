@@ -25,10 +25,14 @@ class UserFavoritesRepository:
         return matches
 
     def create_user_favorite(self, user_id:int, game_id:int) -> user_favorites:
-        one_user = user_favorites(user_id=user_id, game_id=game_id)
-        db.session.add(one_user)
-        db.session.commit()
-        return one_user
+        exists = db.session.query(user_favorites.game_id).filter_by(user_id = user_id, game_id = game_id).first()
+        if (exists is not None):
+            return exists
+        else:
+            one_user = user_favorites(user_id=user_id, game_id=game_id)
+            db.session.add(one_user)
+            db.session.commit()
+            return one_user
 
 # Singleton to be used in other modules
 user_favorites_repository_singleton = UserFavoritesRepository()

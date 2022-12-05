@@ -2,7 +2,7 @@ create table if not exists game (
     game_id serial unique primary key,
     title varchar(255) not null,
     publisher varchar(255), 
-    description varchar(255), 
+    description varchar(1000), 
     developer varchar(255),
     thumbnail_link varchar(255),
     release_date date
@@ -18,11 +18,17 @@ create table if not exists user_data (
 
 create table if not exists review (
     review_id serial unique primary key,
+    author_id serial unique,
+    game_id serial unique,
     review_date date not null, 
     rating_score integer not null, 
     replayability_score integer, 
     graphics_score integer,
-    description varchar(255) not null
+    description varchar(255) not null,
+    constraint review_author_fk foreign key (author_id) references user_data(user_id)
+    on update cascade on delete cascade,
+    constraint review_game_fk foreign key (game_id) references game(game_id)
+    on update cascade on delete cascade
 );
 
 create table if not exists tag (
