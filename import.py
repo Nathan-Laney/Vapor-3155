@@ -29,7 +29,7 @@ headers = {
 
 # Place search here
 # data = 'search "Halo Infinite"; fields *;'
-data = 'fields *; sort rating desc; limit 500;'
+data = 'fields *; limit 500;'
 
 # print(headers)
 
@@ -78,7 +78,9 @@ for x in top10data:
     
     # print(x["summary"])               # DESCRIPTION
     try:
-        description = x["summary"]
+        descriptionLong = x["summary"]
+        description = (descriptionLong[:997] + '..') if len(descriptionLong) > 997 else descriptionLong
+
     except Exception:
         pass
     # print(x["first_release_date"])    
@@ -137,7 +139,7 @@ for x in top10data:
                     pass
     except Exception:
         pass
-    # print("------------------------------------------------------------------")
-    # print(game_id, title, publisher, description, developer, thumbnail_link, release_date)
+    print("------------------------------------------------------------------")
+    print(game_id, title, publisher, description, developer, thumbnail_link, release_date)
     with app.app_context():
         game_repository_singleton.create_game(game_id, title, publisher, description, developer, thumbnail_link, release_date)
