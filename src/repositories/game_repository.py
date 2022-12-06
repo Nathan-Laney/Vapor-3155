@@ -25,6 +25,12 @@ class GameRepository:
         found_games: list[game] = game.query.filter(game.title.ilike(f'%{title}%')).all()
         return found_games
 
+    
+    def get_game_by_id(self, game_id: int) -> game:
+        found_game: game = game.query.get_or_404(game_id)
+        return found_game
+
+
     def create_game(self, game_id: int, title: str,  publisher: str, description: str, developer: str, thumbnail_link: str, release_date: date) -> game:
         # (self, title: str,  publisher: str, description: str, developer: str, thumbnail_link: str, release_date: datetime)
         exists = db.session.query(game.game_id).filter_by(game_id = game_id).first()
