@@ -87,8 +87,8 @@ def all_games():
 def profile():
     current_page = "profile"
     #TODO: get the current session user STATUS: Done
-    # current_user = User.query.filter_by(user_id=session['user']['user_id']).first()
-    current_user = user_repository_singleton.get_user_by_id(user_id=session['user']['user_id']) 
+    # current_user = User.query.filter_by(user_id=session['user']['user_id']).first() OLD
+    current_user = user_repository_singleton.get_user_by_id(user_id=session['user']['user_id'])
     #print(current_user.username)
     #TODO: If the user isnt logged in, dont let them go to the profile page STATUS: Almost Complete
     #getting a Key Error
@@ -187,6 +187,8 @@ def registerForm():
         return redirect('/')
 
     profile_picture = request.files['profile']
+    if (profile_picture.filename == None) :
+        return redirect('/')
 
     if profile_picture.filename == '':
         return redirect('/')
