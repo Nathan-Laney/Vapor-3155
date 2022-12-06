@@ -3,9 +3,10 @@ from models import db
 from datetime import date
 import time
 from src.repositories.game_repository import game_repository_singleton
-import app
+
 from dotenv import load_dotenv
 from os import getenv
+from src.repositories.game_repository import game_repository_singleton
 
 # GAMES STORES: 
 #     game_id =           db.Column(db.Integer, primary_key=True)
@@ -156,5 +157,4 @@ def search_db(query:str):
             pass
         print("------------------------------------------------------------------")
         print(game_id, title, publisher, description, developer, thumbnail_link, release_date)
-        with app.app.app_context():
-            game_repository_singleton.create_game(game_id, title, publisher, description, developer, thumbnail_link, release_date)
+        game_repository_singleton.create_game(game_id, title, publisher, description, developer, thumbnail_link, release_date)
