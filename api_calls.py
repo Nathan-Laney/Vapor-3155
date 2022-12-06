@@ -3,7 +3,7 @@ from models import db
 from datetime import date
 import time
 from src.repositories.game_repository import game_repository_singleton
-from app import app
+import app
 from dotenv import load_dotenv
 from os import getenv
 
@@ -50,7 +50,7 @@ def authorize():
     return keys
 
 
-def search(query:str):
+def search_db(query:str):
     game_id = ""
     title = ""
     publisher = ""
@@ -156,5 +156,5 @@ def search(query:str):
             pass
         print("------------------------------------------------------------------")
         print(game_id, title, publisher, description, developer, thumbnail_link, release_date)
-        with app.app_context():
+        with app.app.app_context():
             game_repository_singleton.create_game(game_id, title, publisher, description, developer, thumbnail_link, release_date)

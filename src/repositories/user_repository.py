@@ -9,6 +9,7 @@ from models import db
     # email =         db.Column(db.String, nullable=False)
     # password =      db.Column(db.String, nullable=False)
     # first_name =    db.Column(db.String, nullable=False)
+    # profile_path =  db.Column(db.String, nullable=False)
 
 class UserRepository:
 
@@ -20,12 +21,16 @@ class UserRepository:
         found_user: user_data = user_data.query.get_or_404(user_id)
         return found_user
 
-    def create_user(self, username: str, email: str, password: str, first_name: str) -> user_data:
+    def get_user_by_email(self, email: int) -> user_data:
+        found_user: user_data = user_data.query.get_or_404(email)
+        return found_user
+
+    def create_user(self, username: str, email: str, password: str, first_name: str, profile_path:str) -> user_data:
         exists = db.session.query(user_data.user_id).filter_by(email = email).first()
         if (exists is not None):
             return exists
         else:
-            one_user = user_data(username=username, email=email, password=password, first_name=first_name)
+            one_user = user_data(username=username, email=email, password=password, first_name=first_name, profile_path=profile_path)
             db.session.add(one_user)
             db.session.commit()
             return one_user
