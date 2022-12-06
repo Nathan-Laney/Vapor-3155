@@ -161,7 +161,7 @@ def search_db(query:str):
         except Exception:
             pass
         
-        print("adding id: " + game_id + ", title: " + title)
+        print("adding id: " + str(game_id) + ", title: " + str(title))
         game_repository_singleton.create_game(game_id, title, publisher, description, developer, thumbnail_link, release_date)
 
         # Add game's Themes and Genres to the tag_game table

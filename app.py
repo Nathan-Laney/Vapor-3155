@@ -75,10 +75,13 @@ def about():
 @app.get('/search')
 def search():
     q = request.args.get('q', '')
-    current_page = "search"
-    # this isn't working -> need to also set it up w/ correct database
-    # title = game_repository_singleton.get_game_by_title(title = q) 
-    return render_template('search.html', search_query=q)
+    search_result_array = game_repository_singleton.search_games_by_title(title = q)
+    search_result_array_length = len(search_result_array)
+    if (search_result_array_length == 0):
+        api_calls.search_db(q)
+        search_result_array = game_repository_singleton.search_games_by_title(title = q)
+        search_result_array_length = len(search_result_array)
+    return render_template('search.html', results_found = search_result_array_length, search_results=search_result_array)
 
 @app.get('/all_games')
 def all_games():
