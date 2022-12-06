@@ -41,23 +41,19 @@ bcrypt = Bcrypt(app)
 
 with app.app_context():
     print("____________________WITH CONTEXT_____________________")
-    api_calls.populate_tags()
-#     all_tags = tag_repository_singleton.get_all_tags()
-#     print(all_tags)
-#     # for i in all_tags:
-#     #     print(i.tag_description)
+    # api_calls.populate_tags()
+    # api_calls.populate_games()
+    # all_tags = tag_repository_singleton.get_all_tags()
+    # print(all_tags)
+    # for i in all_tags:
+    #     print(i.tag_description)
     
-#     all_users = user_repository_singleton.get_all_users()
-#     print(all_users)
-#     doom = game_repository_singleton.create_game_without_an_id("DOOM", "idSoftware", "the classic shooter but in 2016 graphics", "idSoftware", "www.google.com", date.today())
-#     asdhhdsa = game_repository_singleton.get_all_games()
-#     print(asdhhdsa)
-#   # api_calls.search_db("minecraft")
-#     print(game_repository_singleton.get_game_by_id(144104).title)
-
-
-    
-
+    # all_users = user_repository_singleton.get_all_users()
+    # print(all_users)
+    # doom = game_repository_singleton.create_game_without_an_id("DOOM", "idSoftware", "the classic shooter but in 2016 graphics", "idSoftware", "www.google.com", date.today())
+    # asdhhdsa = game_repository_singleton.get_all_games()
+    # print(asdhhdsa)
+    # print(game_repository_singleton.get_game_by_id(144104).title)
     # api_calls.search_db("Fortnite")
     print("____________________________________________________")
 
