@@ -122,10 +122,15 @@ def login():
 def loginform():
     password = request.form.get('password')
     email = request.form.get('email')
+    if (email == None):
+        return redirect('login')
+    if (password == None):
+        return redirect('login')
+
     print(email)
     print(password)
 
-    existing_user = user_repository_singleton.get_user_by_email(email=email) 
+    existing_user = user_repository_singleton.get_user_by_email(email=email) #type: ignore
 
     if not existing_user:
         return redirect('/login')
@@ -168,11 +173,7 @@ def registerForm():
 #         return redirect('/login')
 
 
-    bcryptRounds = int(os.getenv('BCRYPT_ROUNDS'))
-    if bcryptRounds == 'None':
-        print("Defaulting bcryptRounds (error)")
-        #bcrypt rounds are too high
-        bcryptRounds = 20000 # If bcrypt rounds is not found, falls back to default value of 20k
+    bcryptRounds = int(os.getenv('BCRYPT_ROUNDS', 4)) # second parameter is the default fallback
 
     print(password)
     print(bcryptRounds)
@@ -198,6 +199,12 @@ def registerForm():
     profile_picture.save(os.path.join('static', 'profile-pics', safe_filename))
 
     #added username=username, password=hashed_password, etc bc it wouldnt work without it
+    if (email == None):
+        return redirect('login')
+    if (first_name == None):
+        return redirect('login')
+    if (username == None):
+        return redirect('login')
     new_user = user_repository_singleton.create_user(username=username, password=hashed_password, first_name=first_name, email=email, profile_path=safe_filename)
     
     db.session.add(new_user)
