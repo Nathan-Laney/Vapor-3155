@@ -16,7 +16,7 @@ from flask_bcrypt import Bcrypt
 import os
 from models import db
 from datetime import date, datetime
-import api_calls
+import api_calls                              # UNCOMMENT FOR FRONTEND
 from werkzeug.utils import secure_filename
 
 # Imports for our database tables. These are in a specific order, 
@@ -39,21 +39,27 @@ app.secret_key = os.getenv('APP_SECRET_KEY')
 db.init_app(app)
 bcrypt = Bcrypt(app)
 
-# with app.app_context():
-#     print("____________________DEBUG_____________________")
-# #     all_tags = tag_repository_singleton.get_all_tags()
-# #     print(all_tags)
-# #     # for i in all_tags:
-# #     #     print(i.tag_description)
+with app.app_context():
+    print("____________________WITH CONTEXT_____________________")
+    api_calls.populate_tags()
+#     all_tags = tag_repository_singleton.get_all_tags()
+#     print(all_tags)
+#     # for i in all_tags:
+#     #     print(i.tag_description)
     
-# #     all_users = user_repository_singleton.get_all_users()
-# #     print(all_users)
-# #     doom = game_repository_singleton.create_game_without_an_id("DOOM", "idSoftware", "the classic shooter but in 2016 graphics", "idSoftware", "www.google.com", date.today())
-# #     asdhhdsa = game_repository_singleton.get_all_games()
-# #     print(asdhhdsa)
-#     # api_calls.search_db("minecraft")
+#     all_users = user_repository_singleton.get_all_users()
+#     print(all_users)
+#     doom = game_repository_singleton.create_game_without_an_id("DOOM", "idSoftware", "the classic shooter but in 2016 graphics", "idSoftware", "www.google.com", date.today())
+#     asdhhdsa = game_repository_singleton.get_all_games()
+#     print(asdhhdsa)
+#   # api_calls.search_db("minecraft")
 #     print(game_repository_singleton.get_game_by_id(144104).title)
-#     print("____________________________________________________")
+
+
+    
+
+    # api_calls.search_db("Fortnite")
+    print("____________________________________________________")
 
 @app.get('/')
 def index():

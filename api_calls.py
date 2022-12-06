@@ -2,11 +2,14 @@ import requests
 from models import db
 from datetime import date
 import time
-from src.repositories.game_repository import game_repository_singleton
-
+from src.repositories.tag_repository import tag_repository_singleton
 from dotenv import load_dotenv
 from os import getenv
 from src.repositories.game_repository import game_repository_singleton
+from src.repositories.tag_game_repository import tag_game_repository_singleton
+
+# REMOVE FOR FRONTEND TO WORK 
+# from app import app
 
 # GAMES STORES: 
 #     game_id =           db.Column(db.Integer, primary_key=True)
@@ -95,7 +98,7 @@ def search_db(query:str):
         # print(x["summary"])               # DESCRIPTION
         try:
             descriptionLong = x["summary"]
-            description = (descriptionLong[:997] + '..') if len(descriptionLong) > 997 else descriptionLong
+            description = (descriptionLong[:996] + '...') if len(descriptionLong) > 996 else descriptionLong
 
         except Exception:
             pass
@@ -116,6 +119,8 @@ def search_db(query:str):
             thumbnail_link = "https://images.igdb.com/igdb/image/upload/t_cover_big/" + cover_json[0]['image_id'] + ".png"  # COVER ART
         except Exception:
             pass
+
+        
 
         try:
             # For every company in the involved companies list, 
@@ -155,6 +160,47 @@ def search_db(query:str):
                         pass
         except Exception:
             pass
-        print("------------------------------------------------------------------")
-        print(game_id, title, publisher, description, developer, thumbnail_link, release_date)
+        # print("------------------------------------------------------------------")
+        # print(game_id, title, publisher, description, developer, thumbnail_link, release_date)
         game_repository_singleton.create_game(game_id, title, publisher, description, developer, thumbnail_link, release_date)
+
+        # Add game's Themes and Genres to the tag_game table
+        try:
+            for i in x['genres']:
+                tag_game_repository_singleton.create_tag_game(i, x['id'])
+        except Exception:
+            pass
+
+def populate_tags():
+    global keys
+    global client_id
+    global expires_on
+
+    # https://api.igdb.com/v4/genres
+
+    # check validity of keys
+    if (time.time() > expires_on - 60):
+        keys = authorize()
+    
+    # Gens the header for use in requests
+    headers = {
+        'Client-ID': client_id,
+        'Authorization': 'Bearer ' + keys['access_token']
+    }
+
+    # Place search here
+    data = 'fields name, id; limit 100;'
+    # data = 'fields *; where rating > 75; where category = 0; where status = 0; sort rating desc; limit 100;'
+
+    # print(headers)
+
+    themes = requests.post('https://api.igdb.com/v4/themes/', data=data, headers=headers )
+    genres = requests.post('https://api.igdb.com/v4/genres/', data=data, headers=headers )
+    themes_json = themes.json()
+    genres_json = genres.json()
+    for x in themes_json:
+        tag_repository_singleton.create_tag(x['id'], x['name'])
+    for x in genres_json:
+        tag_repository_singleton.create_tag(x['id'], x['name'])
+
+

@@ -57,8 +57,8 @@ create table if not exists user_favorite (
 );
 
 create table if not exists tag_game (
-    tag_id serial unique,
-    game_id serial unique,
+    tag_id serial,
+    game_id serial,
     constraint tag_id_fk foreign key (tag_id) references tag(tag_id) 
     on update cascade on delete cascade,
     constraint game_id_fk foreign key (game_id) references game(game_id)
