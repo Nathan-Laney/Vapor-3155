@@ -1,12 +1,24 @@
+#      :::     :::           :::        :::::::::       ::::::::       ::::::::: 
+#     :+:     :+:         :+: :+:      :+:    :+:     :+:    :+:      :+:    :+: 
+#    +:+     +:+        +:+   +:+     +:+    +:+     +:+    +:+      +:+    +:+  
+#   +#+     +:+       +#++:++#++:    +#++:++#+      +#+    +:+      +#++:++#:    
+#   +#+   +#+        +#+     +#+    +#+            +#+    +#+      +#+    +#+    
+#   #+#+#+#         #+#     #+#    #+#            #+#    #+#      #+#    #+#     
+#    ###           ###     ###    ###             ########       ###    ###      
+
 # Nathan Laney, Kaitlyn Finberg, Sumi Verma, Tyler Minnis, Honna Sammos
+# Created for UNC Charlotte
+# ITSC 3155 - Software Engineering with Jacob Krevat 
+
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, redirect, session
 from flask_bcrypt import Bcrypt
 import os
 from models import db
-from src.models.user import User
+from datetime import date, datetime
+import api_calls
 from werkzeug.utils import secure_filename
-from src.models.game import game 
+from src.models.game import game #TODO: USE SINGLETON INSTEAD
 from src.repositories.game_repository import game_repository_singleton
 
 
@@ -15,13 +27,10 @@ from src.repositories.game_repository import game_repository_singleton
 # Having these imports allows for them to be created on flask run
 # if they do not already exist
 from src.models.user_data import user_data
-from src.models.game import game
-from src.models.tag import tag
-from src.models.tag_game import tag_game
-from src.models.review import review
-from src.models.user_favorites import user_favorites
-from src.models.game_review import game_review
 
+from src.repositories.tag_repository import tag_repository_singleton
+from src.repositories.game_repository import game_repository_singleton
+from src.repositories.user_repository import user_repository_singleton
 
 load_dotenv()
 app = Flask(__name__)
@@ -34,36 +43,32 @@ app.secret_key = os.getenv('APP_SECRET_KEY')
 db.init_app(app)
 bcrypt = Bcrypt(app)
 
-# Creates tables that do not exist
-with app.app_context():
-    db.create_all()
-
-page_index = {
-    1:   "index",
-    2:   "about",
-    3:   "all_games",
-    4:   "search",
-    5:   "other"
-}
-
-current_page = "index"
-
+# with app.app_context():
+#     print("____________________DEBUG_____________________")
+#     all_tags = tag_repository_singleton.get_all_tags()
+#     print(all_tags)
+#     # for i in all_tags:
+#     #     print(i.tag_description)
+    
+#     all_users = user_repository_singleton.get_all_users()
+#     print(all_users)
+#     doom = game_repository_singleton.create_game_without_an_id("DOOM", "idSoftware", "the classic shooter but in 2016 graphics", "idSoftware", "www.google.com", date.today())
+#     asdhhdsa = game_repository_singleton.get_all_games()
+#     print(asdhhdsa)
+#     print("____________________________________________________")
 
 @app.get('/')
 def index():
-    current_page = "index"
     return render_template('index.html')
 
 
 @app.route('/header')
 def header():
-    current_page = "index"
     return render_template('index.html')
 
 
 @app.get('/about')
 def about():
-    current_page = "about"
     return render_template('about.html')
 
 
@@ -77,7 +82,6 @@ def search():
 
 @app.get('/all_games')
 def all_games():
-    current_page = "all_games"
     return render_template('all_games.html')
 
 #kaitlyn is doing things and crying while dylan watches and judges 
@@ -92,25 +96,26 @@ def profile():
     return render_template('profile.html', current_user=current_user, profile_path=session['user']['profile_path'])
 
 
+
 @app.get('/post_review')
-def post_review():
-    current_page = "post_review"
+def post_review():    
     return render_template('post_review.html')
 
 
 @app.get('/gamepage')
+
 def gamepage():
     current_page = "gamepage"
     #single_game = game_repository.get_game_by_id(game_id)
     #existing_game = Game.query.filter_by(single_game=single_game).first()
     return render_template('gamepage.html') #existing_game=existing_game
 
+
 # This is the start of the login in logic
 
 
 @app.get('/login')
 def login():
-    current_page = "login"
     return render_template('login.html')
 
 
@@ -147,6 +152,7 @@ def register():
     current_page = "register"
     return render_template('register.html')
 
+
 #found some errors in register. login should work fine when these are fixed
 @app.post('/register')
 def registerForm():
@@ -159,8 +165,10 @@ def registerForm():
     existing_user = user_data.query.filter_by(username=username).first()
     existing_email = user_data.query.filter_by(email=email).first()
 
-    if (existing_email and existing_user):
-        return redirect('/login')
+
+#     if (existing_email and existing_user):
+#         return redirect('/login')
+
 
     bcryptRounds = int(os.getenv('BCRYPT_ROUNDS'))
     if bcryptRounds == 'None':
@@ -199,9 +207,9 @@ def registerForm():
     return redirect('/login')
 
 
+
 @app.get('/resetPassword')
 def resetPassword():
-    current_page = "resetPassword"
     return render_template('resetPassword.html')
 
 
