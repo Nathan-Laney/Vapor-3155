@@ -8,3 +8,5 @@ class user_data(db.Model):   # type: ignore
     email =         db.Column(db.String, nullable=False)
     password =      db.Column(db.String, nullable=False)
     first_name =    db.Column(db.String, nullable=False)
+    profile_path =  db.Column(db.String, nullable=False)
+    
