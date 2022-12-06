@@ -16,6 +16,7 @@ from flask_bcrypt import Bcrypt
 import os
 from models import db
 from datetime import date, datetime
+import api_calls
 
 # Imports for our database tables. These are in a specific order, 
 # to correctly populate the foreign keys. 
