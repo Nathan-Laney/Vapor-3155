@@ -64,3 +64,40 @@
 .gray-color{
     color: #969896;
 }
+
+.glide-container{
+    /* min-height : 300px;
+    max-height : 300px;  */
+    /* max-height: 500px; */
+    overflow: hidden;
+    
+    /* width : 75%;
+    height: 75%; */
+}
+
+.game-card {
+    max-width: 200px;
+    height: 250px;
+}
+
+.game-card__intro{
+
+}
+
+.game-card__title{
+
+}
+
+.game-card__btn{
+
+}
+.game-card__btn-prev{
+
+}
+.game-card__btn-next{
+    
+}
+.game-card__icon{
+    /* width: inherit; */
+    height: 250px;
+}
