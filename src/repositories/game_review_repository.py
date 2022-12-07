@@ -26,10 +26,15 @@ class GameReviewRepository:
         return matches
 
     def create_game_review(self, review_id:int, game_id:int) -> game_review:
-        created_review = game_review(review_id=review_id, game_id=game_id)
-        db.session.add(created_review)
-        db.session.commit()
-        return created_review
+        exists = db.session.query(game_review.review_id).filter_by(review_id = review_id, game_id = game_id).first()
+
+        if (exists is not None):
+            return exists
+        else:
+            created_review = game_review(review_id=review_id, game_id=game_id)
+            db.session.add(created_review)
+            db.session.commit()
+            return created_review
 
 # Singleton to be used in other modules
 game_review_repository_singleton = GameReviewRepository()

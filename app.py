@@ -1,20 +1,28 @@
+#      :::     :::           :::        :::::::::       ::::::::       ::::::::: 
+#     :+:     :+:         :+: :+:      :+:    :+:     :+:    :+:      :+:    :+: 
+#    +:+     +:+        +:+   +:+     +:+    +:+     +:+    +:+      +:+    +:+  
+#   +#+     +:+       +#++:++#++:    +#++:++#+      +#+    +:+      +#++:++#:    
+#   +#+   +#+        +#+     +#+    +#+            +#+    +#+      +#+    +#+    
+#   #+#+#+#         #+#     #+#    #+#            #+#    #+#      #+#    #+#     
+#    ###           ###     ###    ###             ########       ###    ###      
+
 # Nathan Laney, Kaitlyn Finberg, Sumi Verma, Tyler Minnis, Honna Sammos
+# Created for UNC Charlotte
+# ITSC 3155 - Software Engineering with Jacob Krevat 
+
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, redirect, session
 from flask_bcrypt import Bcrypt
 import os
 from models import db
-from src.models.user_data import user_data
-from werkzeug.utils import secure_filename
-# from src.models.game import game 
-# from src.repositories.game_repository import game_repository_singleton
 from datetime import date, datetime
+import api_calls                              # UNCOMMENT FOR FRONTEND
+from werkzeug.utils import secure_filename
 
 # Imports for our database tables. These are in a specific order, 
 # to correctly populate the foreign keys. 
 # Having these imports allows for them to be created on flask run
 # if they do not already exist
-from src.models.user_data import user_data
 
 from src.repositories.tag_repository import tag_repository_singleton
 from src.repositories.game_repository import game_repository_singleton
@@ -31,21 +39,23 @@ app.secret_key = os.getenv('APP_SECRET_KEY')
 db.init_app(app)
 bcrypt = Bcrypt(app)
 
-# with app.app_context():
-#     db.create_all()
-    
-    # print("____________________DEBUG_____________________")
+with app.app_context():
+    print("____________________WITH CONTEXT_____________________")
+    # api_calls.populate_tags()
+    # api_calls.populate_games()
     # all_tags = tag_repository_singleton.get_all_tags()
     # print(all_tags)
-    # # for i in all_tags:
-    # #     print(i.tag_description)
+    # for i in all_tags:
+    #     print(i.tag_description)
     
     # all_users = user_repository_singleton.get_all_users()
     # print(all_users)
     # doom = game_repository_singleton.create_game_without_an_id("DOOM", "idSoftware", "the classic shooter but in 2016 graphics", "idSoftware", "www.google.com", date.today())
     # asdhhdsa = game_repository_singleton.get_all_games()
     # print(asdhhdsa)
-    # print("____________________________________________________")
+    # print(game_repository_singleton.get_game_by_id(144104).title)
+    # api_calls.search_db("Fortnite")
+    print("____________________________________________________")
 
 @app.get('/')
 def index():
@@ -65,10 +75,13 @@ def about():
 @app.get('/search')
 def search():
     q = request.args.get('q', '')
-    current_page = "search"
-    # this isn't working -> need to also set it up w/ correct database
-    # title = game_repository_singleton.get_game_by_title(title = q) 
-    return render_template('search.html', search_query=q)
+    search_result_array = game_repository_singleton.search_games_by_title(title = q)
+    search_result_array_length = len(search_result_array)
+    if (search_result_array_length == 0):
+        api_calls.search_db(q)
+        search_result_array = game_repository_singleton.search_games_by_title(title = q)
+        search_result_array_length = len(search_result_array)
+    return render_template('search.html', results_found = search_result_array_length, search_results=search_result_array)
 
 @app.get('/all_games')
 def all_games():
@@ -79,12 +92,13 @@ def all_games():
 def profile():
     current_page = "profile"
     #TODO: get the current session user STATUS: Done
-    current_user = user_data.query.filter_by(user_id=session['user']['user_id']).first()
+    # current_user = User.query.filter_by(user_id=session['user']['user_id']).first() OLD
+    current_user = user_repository_singleton.get_user_by_id(user_id=session['user']['user_id'])
     #print(current_user.username)
     #TODO: If the user isnt logged in, dont let them go to the profile page STATUS: Almost Complete
     #getting a Key Error
     return render_template('profile.html', current_user=current_user, profile_path=session['user']['profile_path'])
-    return render_template('profile.html')
+
 
 
 @app.get('/post_review')
@@ -93,13 +107,13 @@ def post_review():
 
 
 @app.get('/gamepage')
+<<<<<<<<< Temporary merge branch 1
 def gamepage():
     current_page = "gamepage"
     #single_game = game_repository.get_game_by_id(game_id)
     #existing_game = Game.query.filter_by(single_game=single_game).first()
     return render_template('gamepage.html') #existing_game=existing_game
-def gamepage():    
-    return render_template('gamepage.html')
+
 
 # This is the start of the login in logic
 
@@ -113,10 +127,15 @@ def login():
 def loginform():
     password = request.form.get('password')
     email = request.form.get('email')
+    if (email == None):
+        return redirect('login')
+    if (password == None):
+        return redirect('login')
+
     print(email)
     print(password)
 
-    existing_user = user_data.query.filter_by(email=email).first()
+    existing_user = user_repository_singleton.get_user_by_email(email=email) #type: ignore
 
     if not existing_user:
         return redirect('/login')
@@ -142,6 +161,7 @@ def register():
     current_page = "register"
     return render_template('register.html')
 
+
 #found some errors in register. login should work fine when these are fixed
 @app.post('/register')
 def registerForm():
@@ -151,30 +171,14 @@ def registerForm():
     password = request.form.get('password')
     first_name = request.form.get('first_name')
     email = request.form.get('email')
-    existing_user = user_data.query.filter_by(username=username).first()
-    existing_email = user_data.query.filter_by(email=email).first()
-
-# @app.post('/register')
-# def registerForm():
-#     username = request.form.get('user_name')
-#     password = request.form.get('password')
-#     first_name = request.form.get('first_name')
-#     email = request.form.get('email')
-#     existing_user = user_data.query.filter_by(username=username).first()
-#     existing_email = user_data.query.filter_by(email=email).first()
+    # existing_user = user_data.query.filter_by(username=username).first()
+    # existing_email = user_data.query.filter_by(email=email).first()
 
 #     if (existing_email and existing_user):
 #         return redirect('/login')
 
-    bcryptRounds = int(os.getenv('BCRYPT_ROUNDS'))
-    if bcryptRounds == 'None':
-        print("Defaulting bcryptRounds (error)")
-        #bcrypt rounds are too high
-        bcryptRounds = 20000 # If bcrypt rounds is not found, falls back to default value of 20k
-#     bcryptRounds = os.getenv('BCRYPT_ROUNDS')
-#     if bcryptRounds == 'None':
-#         print("Defaulting bcryptRounds (error)")
-#         bcryptRounds = 20000 # If bcrypt rounds is not found, falls back to default value of 20k
+
+    bcryptRounds = int(os.getenv('BCRYPT_ROUNDS', 4)) # second parameter is the default fallback
 
     print(password)
     print(bcryptRounds)
@@ -188,6 +192,8 @@ def registerForm():
         return redirect('/')
 
     profile_picture = request.files['profile']
+    if (profile_picture.filename == None) :
+        return redirect('/')
 
     if profile_picture.filename == '':
         return redirect('/')
@@ -200,11 +206,17 @@ def registerForm():
     profile_picture.save(os.path.join('static', 'profile-pics', safe_filename))
 
     #added username=username, password=hashed_password, etc bc it wouldnt work without it
-    new_user = user_data(username=username, password=hashed_password, first_name=first_name, email=email, profile_path=safe_filename)
+    new_user = User(username=username, password=hashed_password, first_name=first_name, email=email, profile_path=safe_filename)
 
     db.session.add(new_user)
     db.session.commit()
     return redirect('/login')
+=========
+#     bcryptRounds = os.getenv('BCRYPT_ROUNDS')
+#     if bcryptRounds == 'None':
+#         print("Defaulting bcryptRounds (error)")
+#         bcryptRounds = 20000 # If bcrypt rounds is not found, falls back to default value of 20k
+
 #     hashed_bytes = bcrypt.generate_password_hash(
 #         password, bcryptRounds)
 #     hashed_password = hashed_bytes.decode('utf-8')
@@ -213,6 +225,7 @@ def registerForm():
 #     db.session.add(new_user)
 #     db.session.commit()
 #     return redirect('/login')
+>>>>>>>>> Temporary merge branch 2
 
 
 @app.get('/resetPassword')

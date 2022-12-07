@@ -16,17 +16,24 @@
     </div>
 </form>
 
-{% if search_query != '' %}
+{% if results_found > 0 %}
 
-<div class="d-flex justify-content-center">
-  <div class="card" style="width:18em">
-    <img class="card-img-top" src="/static/images/portal.jpeg" alt="portal">
-    <div class="card-body">
-      <h5 class="card-title text-center">Portal</h5>
-      <p class="card-text text-center">4.9/5</p>
+{%for i in range(0, results_found)%}
+  
+    
+
+    <div class="d-inline-flex">
+      <div class="card" style="width:18em">
+        <img class="card-img-top" src="{{search_results[i]['thumbnail_link']}}" alt='{{search_results[i]["title"]}}'>
+        <div class="card-body">
+          <h5 class="card-title text-center">{{search_results[i]["title"]}}</h5>
+          <p class="card-text text-center">{{search_results[i]["developer"]}}</p>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+
+{%endfor%}
+
 {% else %}
 <p>No games found</p>
 
