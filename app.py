@@ -42,7 +42,7 @@ bcrypt = Bcrypt(app)
 with app.app_context():
     print("____________________WITH CONTEXT_____________________")
     # api_calls.populate_tags()
-    # api_calls.populate_games()
+    # api_calls.populate_games(500)
     # all_tags = tag_repository_singleton.get_all_tags()
     # print(all_tags)
     # for i in all_tags:
@@ -55,6 +55,8 @@ with app.app_context():
     # print(asdhhdsa)
     # print(game_repository_singleton.get_game_by_id(144104).title)
     # api_calls.search_db("Fortnite")
+    # api_calls.fast_search_db("Project")
+
     print("____________________________________________________")
 
 @app.get('/')
@@ -75,13 +77,10 @@ def about():
 @app.get('/search')
 def search():
     q = request.args.get('q', '')
+    api_calls.search_db(q)
     search_result_array = game_repository_singleton.search_games_by_title(title = q)
     search_result_array_length = len(search_result_array)
-    if (search_result_array_length == 0):
-        api_calls.search_db(q)
-        search_result_array = game_repository_singleton.search_games_by_title(title = q)
-        search_result_array_length = len(search_result_array)
-    return render_template('search.html', results_found = search_result_array_length, search_results=search_result_array)
+    return render_template('search.html', results_found = search_result_array_length, search_results=search_result_array, search_query=q)
 
 @app.get('/all_games')
 def all_games():

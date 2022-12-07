@@ -5,7 +5,8 @@ create table if not exists game (
     description varchar(1000), 
     developer varchar(255),
     thumbnail_link varchar(255),
-    release_date date
+    release_date date,
+    rating float
 );
 
 create table if not exists user_data (
