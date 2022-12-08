@@ -31,29 +31,30 @@ class GameRepository:
         return found_game
 
 
-    def create_game(self, game_id: int, title: str,  publisher: str, description: str, developer: str, thumbnail_link: str, release_date: date) -> game:
+    def create_game(self, game_id: int, title: str,  publisher: str, description: str, developer: str, thumbnail_link: str, release_date: date, rating:float) -> game:
         # (self, title: str,  publisher: str, description: str, developer: str, thumbnail_link: str, release_date: datetime)
         exists = db.session.query(game.game_id).filter_by(game_id = game_id).first()
 
         if (exists is not None):
             return exists
         else:
-            one_game = game(game_id=game_id, title=title, publisher=publisher, description=description, developer=developer, thumbnail_link=thumbnail_link, release_date=release_date)
+            one_game = game(game_id=game_id, title=title, publisher=publisher, description=description, developer=developer, thumbnail_link=thumbnail_link, release_date=release_date, rating=rating)
             db.session.add(one_game)
             db.session.commit()
             return one_game
     
-    def create_game_without_an_id(self, title: str,  publisher: str, description: str, developer: str, thumbnail_link: str, release_date: date) -> game:
+    def create_game_without_an_id(self, title: str,  publisher: str, description: str, developer: str, thumbnail_link: str, release_date: date, rating:float) -> game:
         # (self, title: str,  publisher: str, description: str, developer: str, thumbnail_link: str, release_date: datetime)
         exists = db.session.query(game.title).filter_by(title = title).first()
 
         if (exists is not None):
             return exists
         else:
-            one_game = game(title=title, publisher=publisher, description=description, developer=developer, thumbnail_link=thumbnail_link, release_date=release_date)
+            one_game = game(title=title, publisher=publisher, description=description, developer=developer, thumbnail_link=thumbnail_link, release_date=release_date, rating=rating)
             db.session.add(one_game)
             db.session.commit()
             return one_game
+    
 
 # Singleton to be used in other modules
 game_repository_singleton = GameRepository()
