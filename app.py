@@ -27,6 +27,7 @@ from werkzeug.utils import secure_filename
 from src.repositories.tag_repository import tag_repository_singleton
 from src.repositories.game_repository import game_repository_singleton
 from src.repositories.user_repository import user_repository_singleton
+from src.repositories.review_repository import review_repository_singleton
 
 load_dotenv()
 app = Flask(__name__)
@@ -39,8 +40,8 @@ app.secret_key = os.getenv('APP_SECRET_KEY')
 db.init_app(app)
 bcrypt = Bcrypt(app)
 
-with app.app_context():
-    print("____________________WITH CONTEXT_____________________")
+# with app.app_context():
+    # print("____________________WITH CONTEXT_____________________")
     # api_calls.populate_tags()
     # api_calls.populate_games()
     # all_tags = tag_repository_singleton.get_all_tags()
@@ -55,11 +56,17 @@ with app.app_context():
     # print(asdhhdsa)
     # print(game_repository_singleton.get_game_by_id(144104).title)
     # api_calls.search_db("Fortnite")
-    print("____________________________________________________")
+    # print("____________________________________________________")
 
 @app.get('/')
 def index():
-    return render_template('index.html')
+    highest_rated = review_repository_singleton.get_highest_reviews()
+
+
+    #ourpicks = fortnite, skyrim, valorant, portal 2, dishonored, fallout new vegas
+    our_picks = []
+    user_favorite = [] 
+    return render_template('index.html', highest_rated = highest_rated, our_picks = our_picks, user_favorite = user_favorite)
 
 
 @app.route('/header')
@@ -107,7 +114,7 @@ def post_review():
 
 
 @app.get('/gamepage')
-<<<<<<<<< Temporary merge branch 1
+
 def gamepage():
     current_page = "gamepage"
     #single_game = game_repository.get_game_by_id(game_id)
@@ -206,12 +213,12 @@ def registerForm():
     profile_picture.save(os.path.join('static', 'profile-pics', safe_filename))
 
     #added username=username, password=hashed_password, etc bc it wouldnt work without it
-    new_user = User(username=username, password=hashed_password, first_name=first_name, email=email, profile_path=safe_filename)
+    new_user = user_repository_singleton.create_user(username=username, password=hashed_password, first_name=first_name, email=email, profile_path=safe_filename)
 
     db.session.add(new_user)
     db.session.commit()
     return redirect('/login')
-=========
+
 #     bcryptRounds = os.getenv('BCRYPT_ROUNDS')
 #     if bcryptRounds == 'None':
 #         print("Defaulting bcryptRounds (error)")
@@ -225,7 +232,7 @@ def registerForm():
 #     db.session.add(new_user)
 #     db.session.commit()
 #     return redirect('/login')
->>>>>>>>> Temporary merge branch 2
+
 
 
 @app.get('/resetPassword')

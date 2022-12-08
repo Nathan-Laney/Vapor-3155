@@ -35,5 +35,11 @@ class ReviewRepository:
             db.session.commit()
             return new_review
 
+    def get_highest_reviews(self) -> list[review]:
+        highest_reviews = 'portal'
+        # highest_reviews: list[review] = review.query.filter_by(review.rating_score >= 4)
+        return highest_reviews
+
+
 # Singleton to be used in other modules
 review_repository_singleton = ReviewRepository()
