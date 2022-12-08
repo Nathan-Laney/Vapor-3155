@@ -5,7 +5,8 @@ create table if not exists game (
     description varchar(1000), 
     developer varchar(255),
     thumbnail_link varchar(255),
-    release_date date
+    release_date date,
+    rating float
 );
 
 create table if not exists user_data (
@@ -57,8 +58,8 @@ create table if not exists user_favorite (
 );
 
 create table if not exists tag_game (
-    tag_id serial unique,
-    game_id serial unique,
+    tag_id serial,
+    game_id serial,
     constraint tag_id_fk foreign key (tag_id) references tag(tag_id) 
     on update cascade on delete cascade,
     constraint game_id_fk foreign key (game_id) references game(game_id)

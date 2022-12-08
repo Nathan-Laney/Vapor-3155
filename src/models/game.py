@@ -12,3 +12,4 @@ class game(db.Model):  # type: ignore
     developer =         db.Column(db.String, nullable=True)
     thumbnail_link =    db.Column(db.String, nullable=True)
     release_date =      db.Column(db.DateTime, nullable=False)
+    rating =            db.Column(db.Float, nullable=False)

@@ -16,7 +16,7 @@ from flask_bcrypt import Bcrypt
 import os
 from models import db
 from datetime import date, datetime
-import api_calls
+import api_calls                              # UNCOMMENT FOR FRONTEND
 from werkzeug.utils import secure_filename
 
 # Imports for our database tables. These are in a specific order, 
@@ -39,21 +39,25 @@ app.secret_key = os.getenv('APP_SECRET_KEY')
 db.init_app(app)
 bcrypt = Bcrypt(app)
 
-# with app.app_context():
-#     print("____________________DEBUG_____________________")
-# #     all_tags = tag_repository_singleton.get_all_tags()
-# #     print(all_tags)
-# #     # for i in all_tags:
-# #     #     print(i.tag_description)
+with app.app_context():
+    print("____________________WITH CONTEXT_____________________")
+    # api_calls.populate_tags()
+    # api_calls.populate_games(500)
+    # all_tags = tag_repository_singleton.get_all_tags()
+    # print(all_tags)
+    # for i in all_tags:
+    #     print(i.tag_description)
     
-# #     all_users = user_repository_singleton.get_all_users()
-# #     print(all_users)
-# #     doom = game_repository_singleton.create_game_without_an_id("DOOM", "idSoftware", "the classic shooter but in 2016 graphics", "idSoftware", "www.google.com", date.today())
-# #     asdhhdsa = game_repository_singleton.get_all_games()
-# #     print(asdhhdsa)
-#     # api_calls.search_db("minecraft")
-#     print(game_repository_singleton.get_game_by_id(144104).title)
-#     print("____________________________________________________")
+    # all_users = user_repository_singleton.get_all_users()
+    # print(all_users)
+    # doom = game_repository_singleton.create_game_without_an_id("DOOM", "idSoftware", "the classic shooter but in 2016 graphics", "idSoftware", "www.google.com", date.today())
+    # asdhhdsa = game_repository_singleton.get_all_games()
+    # print(asdhhdsa)
+    # print(game_repository_singleton.get_game_by_id(144104).title)
+    # api_calls.search_db("Fortnite")
+    # api_calls.fast_search_db("Project")
+
+    print("____________________________________________________")
 
 @app.get('/')
 def index():
@@ -73,10 +77,10 @@ def about():
 @app.get('/search')
 def search():
     q = request.args.get('q', '')
-    current_page = "search"
-    # this isn't working -> need to also set it up w/ correct database
-    # title = game_repository_singleton.get_game_by_title(title = q) 
-    return render_template('search.html', search_query=q)
+    api_calls.search_db(q)
+    search_result_array = game_repository_singleton.search_games_by_title(title = q)
+    search_result_array_length = len(search_result_array)
+    return render_template('search.html', results_found = search_result_array_length, search_results=search_result_array, search_query=q)
 
 @app.get('/all_games')
 def all_games():
