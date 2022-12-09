@@ -14,6 +14,7 @@ create table if not exists user_data (
     email varchar(255) not null,
     password varchar(255) not null,
     first_name varchar(255)
+    profile_path varchar(255) not null,
 );
 
 create table if not exists review (

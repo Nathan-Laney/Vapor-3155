@@ -11,13 +11,15 @@
 # ITSC 3155 - Software Engineering with Jacob Krevat 
 
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session,  url_for, flash, abort
 from flask_bcrypt import Bcrypt
 import os
+import os.path
 from models import db
 from datetime import date, datetime
 import api_calls
 from werkzeug.utils import secure_filename
+import json
 
 # Imports for our database tables. These are in a specific order, 
 # to correctly populate the foreign keys. 
@@ -31,6 +33,8 @@ from src.repositories.user_repository import user_repository_singleton
 load_dotenv()
 app = Flask(__name__)
 
+
+#error handaler 
 print(os.getenv('SQLALCHEMY_DATABASE_URI'))
 # postgresql://username:password@host:port/database_name
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
@@ -54,6 +58,26 @@ bcrypt = Bcrypt(app)
 #     # api_calls.search_db("minecraft")
 #     print(game_repository_singleton.get_game_by_id(144104).title)
 #     print("____________________________________________________")
+
+# app name
+@app.errorhandler(404)
+# inbuilt function which takes error as parameter
+def not_found(e):
+# defining function
+ return render_template("errors/404.html")
+
+@app.errorhandler(405)
+# inbuilt function which takes error as parameter
+def not_found(e):
+# defining function
+ return render_template("errors/405.html")
+
+@app.errorhandler(500)
+# inbuilt function which takes error as parameter
+def internal(e):
+# defining function
+ return render_template("errors/500.html")
+
 
 @app.get('/')
 def index():
@@ -123,32 +147,37 @@ def loginform():
     password = request.form.get('password')
     email = request.form.get('email')
     if (email == None):
+        flash('Please enter in an email address')
         return redirect('login')
     if (password == None):
+        flash('Please enter in an password')
         return redirect('login')
-
+    print("this is the login information")
     print(email)
     print(password)
 
     existing_user = user_repository_singleton.get_user_by_email(email=email) #type: ignore
 
     if not existing_user:
+        flash('Please enter in a valid username and password')
         return redirect('/login')
 
-    #if not bcrypt.check_password_hash(existing_user.password, password):
-        #return redirect('/login')
+    if not bcrypt.check_password_hash(existing_user.password, password):
+        return redirect('/login')
 
     session['user'] = {
         'user_id': existing_user.user_id,
         'profile_path': existing_user.profile_path
     }
-    return redirect('/youGotIn')
+    return redirect('/profile')
 # this is a post... you might have to make a get so that the page will load.....
 
 
-@app.get('/youGotIn')
+@app.get('/flashPage')
 def temp():
-    return render_template('youGotIn.html')
+    return render_template('flashPage.html')
+
+
 
 
 @app.get('/register')
@@ -162,10 +191,14 @@ def register():
 def registerForm():
     #username resturning null
     user_id = request.form.get('user_id')
-    username = request.form.get('user_name')
+    username = request.form.get('username')
     password = request.form.get('password')
     first_name = request.form.get('first_name')
     email = request.form.get('email')
+    #print(username)
+    #print(password)
+    #print(first_name)
+    #print(email)
     # existing_user = user_data.query.filter_by(username=username).first()
     # existing_email = user_data.query.filter_by(email=email).first()
 
@@ -174,9 +207,6 @@ def registerForm():
 
 
     bcryptRounds = int(os.getenv('BCRYPT_ROUNDS', 4)) # second parameter is the default fallback
-
-    print(password)
-    print(bcryptRounds)
     #rounds caused this to fail
     hashed_bytes = bcrypt.generate_password_hash(
         password, bcryptRounds)
@@ -202,10 +232,13 @@ def registerForm():
 
     #added username=username, password=hashed_password, etc bc it wouldnt work without it
     if (email == None):
+        flash('Enter Valid Email')
         return redirect('login')
     if (first_name == None):
+        flash('Enter a first name')
         return redirect('login')
     if (username == None):
+        flash('Enter a username')
         return redirect('login')
     new_user = user_repository_singleton.create_user(username=username, password=hashed_password, first_name=first_name, email=email, profile_path=safe_filename)
     
@@ -218,11 +251,18 @@ def resetPassword():
     return render_template('resetPassword.html')
 
 
-@app.post('/logout')
+@app.get('/logout')
 def logout():
-    session.pop('user')
-    return redirect('/')
-
+    #og code
+    #session.pop('user')
+    #current_user = user_repository_singleton.get_user_by_id(user_id=session['user']['user_id'])
+    print("the print statment")
+    print(session['user'])
+    if 'user' not in session:
+        abort(401)
+    del session['user']
+    flash('You have been logged out')
+    return redirect('flashPage')
 
 if __name__ == '__main__':
     app.run()

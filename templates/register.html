@@ -5,8 +5,10 @@
 
 <!-- Added enctype so the form will accept images -->
 <form action="/register" method="POST" enctype="multipart/form-data"> 
+    <label for="user_id">user_id</label><br>
+    <input type="text" id="user_id" name="user_id" required><br><br>
     <label for="first_name">First Name</label><br>
-    <input type="text" id="first_Name" name="first_Name" required><br><br>
+    <input type="text" id="first_name" name="first_name" required><br><br>
     <label for="username">User Name</label><br>
     <input type="text" id="username" name="username" required><br><br>
     <label for="email">Email</label><br>
