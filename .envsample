@@ -1,3 +1,5 @@
 SQLALCHEMY_DATABASE_URI: # postgresql://username:password@host:port/database_name
 APP_SECRET_KEY: # os.urandom(<INT>)
 BCRYPT_ROUNDS: # <INT>
+IGDB_CLIENT_ID = # IGDB API KEY
+IGDB_CLIENT_SECRET =  # IGDB API SECRET

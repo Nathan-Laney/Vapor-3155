@@ -1,0 +1,8 @@
+{% extends '_layout.html' %}
+
+
+{% block body %}
+{% for message in get_flashed_messages() %}
+<h2>{{ message }}</h2>
+{% endfor %}
+{% endblock %}

@@ -4,3 +4,7 @@ venv
 __pycache__
 .pytest_cache
 .env
+static/profile-pics/1-506C9D93-143C-4AA3-AF20-FE3A1C52C63D.JPG
+error_handlers.py
+package.json
+node_modules
