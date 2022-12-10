@@ -2,6 +2,9 @@
 
 {% block body %}
 <h2 class="mb-5">Login to Your account</h2>
+{% for message in get_flashed_messages() %}
+<h2>{{ message }}</h2>
+{% endfor %}
 
 <form action="/login" method="POST">
     <label for="email">Email</label><br>
