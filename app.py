@@ -44,7 +44,23 @@ db.init_app(app)
 bcrypt = Bcrypt(app)
 
 with app.app_context():
+
+    db.create_all()
+
+page_index = {
+    1:   "index",
+    2:   "about",
+    3:   "all_games",
+    4:   "search",
+    5:   "other"
+}
+
+current_page = "index"
+#with app.app_context():
+    #print("____________________WITH CONTEXT_____________________")
+=======
     print("____________________WITH CONTEXT_____________________")
+
     # api_calls.populate_tags()
     # api_calls.populate_games(500)
     # all_tags = tag_repository_singleton.get_all_tags()
@@ -60,6 +76,9 @@ with app.app_context():
     # print(game_repository_singleton.get_game_by_id(144104).title)
     # api_calls.search_db("Fortnite")
     # api_calls.fast_search_db("Project")
+
+
+    #print("____________________________________________________")
 
     print("____________________________________________________")
 
