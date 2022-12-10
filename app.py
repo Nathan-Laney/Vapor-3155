@@ -44,6 +44,44 @@ page_index = {
 }
 
 current_page = "index"
+#with app.app_context():
+    #print("____________________WITH CONTEXT_____________________")
+    # api_calls.populate_tags()
+    # api_calls.populate_games(500)
+    # all_tags = tag_repository_singleton.get_all_tags()
+    # print(all_tags)
+    # for i in all_tags:
+    #     print(i.tag_description)
+    
+    # all_users = user_repository_singleton.get_all_users()
+    # print(all_users)
+    # doom = game_repository_singleton.create_game_without_an_id("DOOM", "idSoftware", "the classic shooter but in 2016 graphics", "idSoftware", "www.google.com", date.today())
+    # asdhhdsa = game_repository_singleton.get_all_games()
+    # print(asdhhdsa)
+    # print(game_repository_singleton.get_game_by_id(144104).title)
+    # api_calls.search_db("Fortnite")
+    # api_calls.fast_search_db("Project")
+
+    #print("____________________________________________________")
+
+# app name
+@app.errorhandler(404)
+# inbuilt function which takes error as parameter
+def not_found(e):
+# defining function
+ return render_template("errors/404.html")
+
+@app.errorhandler(405)
+# inbuilt function which takes error as parameter
+def not_found(e):
+# defining function
+ return render_template("errors/405.html")
+
+@app.errorhandler(500)
+# inbuilt function which takes error as parameter
+def internal(e):
+# defining function
+ return render_template("errors/500.html")
 
 
 @app.get('/')
