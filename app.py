@@ -43,18 +43,6 @@ app.secret_key = os.getenv('APP_SECRET_KEY')
 db.init_app(app)
 bcrypt = Bcrypt(app)
 
-with app.app_context():
-
-    db.create_all()
-
-page_index = {
-    1:   "index",
-    2:   "about",
-    3:   "all_games",
-    4:   "search",
-    5:   "other"
-}
-
 current_page = "index"
 with app.app_context():
     #print("____________________WITH CONTEXT_____________________")
