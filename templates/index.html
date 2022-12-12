@@ -1,176 +1,228 @@
 {% extends '_layout.html' %}
 
 {% block body %}
-<h2 class="p-2">highest rated games</h2>
-
-<div class="row p-5">
-  <!-- <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-    Indicators 
-    <ol class="carousel-indicators">
-      <li data-target="#carousel" data-slide-to="0" class="active"></li>
-      <li data-target="#carousel" data-slide-to="1"></li>
-      <li data-target="#carousel" data-slide-to="2"></li>
-    </ol> -->
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.2.0/glide.js" integrity="sha512-vZGsugWaSqQZuW8N5Z3ild7Tk8NqiZjKffeIQGpnnIs6g7HVZaFZjlLKPIw1qDsrQ5KAxAGfBinglQWu6i/8DA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<div class="glide-container" >
-  <div class="glide">
+
+<h2 class="p-2">highest rated games</h2>
+<div class="row p-5">
+  
+  <div class="glide-container">
+    <div class="glide-high">
       <div class="glide__track" data-glide-el="track">
-          <ul class="glide__slides">
-              <li class="glide__slide">
-                      <div class="game-card">
-                          <img src="/static/images/blackops.jpeg" class="game-card__icon">
-                          <h4 class="game-card__title">
-                              Portal
-                          </h4>
-                          <p class="game-card__intro">
-                              5
-                          </p>
-                      </div>
-              </li>
-              <li class="glide__slide">
-                      <div class="game-card">
-                          <img src="/static/images/minecraft.png" class="game-card__icon">
-                          <h4 class="game-card__title">
-                            minecraft
-                          </h4>
-                          <p class="game-card__intro">
-                            5
-                        </p>
-                      </div>
-                  
-              </li>
-              <li class="glide__slide">
-                      <div class="game-card">
-                          <img src="/static/images/dead_by_daylight.png" class="game-card__icon">
-                          <h4 class="game-card__title">
-                            dead_by_daylight
-                          </h4>
-                          <p class="game-card__intro">
-                            5
-                        </p>
-                      </div>
-                  
-              </li>
-              <li class="glide__slide">
-                      <div class="game-card">
-                          <img src="/static/images/blackops.jpeg" class="game-card__icon">
-                          <h4 class="game-card__title">
-                            blackops
-                          </h4>
-                          <p class="game-card__intro">
-                            5
-                        </p>
-                      </div>
-                  
-              </li>
-              <li class="glide__slide">
-                      <div class="game-card">
-                          <img src="/static/images/animal_crossing.png" class="game-card__icon">
-                          <h4 class="game-card__title">
-                            animal_crossing
-                          </h4>
-                          <p class="game-card__intro">
-                            5
-                        </p>
-                      </div>
-                  
-              </li>
-          </ul>
+        <ul class="glide__slides">
+          <li class="glide__slide">
+            <!-- <div class="game-card"> -->
+              <img src="/static/images/blackops.jpeg" class="game-card__icon">
+              <h4 class="game-card__title">
+                Portal
+              </h4>
+              <p class="game-card__intro">
+                5
+              </p>
+            <!-- </div> -->
+          </li>
+          <li class="glide__slide">
+            <!-- <div class="game-card"> -->
+              <img src="/static/images/minecraft.png" class="game-card__icon">
+              <h4 class="game-card__title">
+                minecraft
+              </h4>
+              <p class="game-card__intro">
+                5
+              </p>
+            <!-- </div> -->
+            
+          </li>
+          <li class="glide__slide">
+            <!-- <div class="game-card"> -->
+              <img src="/static/images/dead_by_daylight.png" class="game-card__icon">
+              <h4 class="game-card__title">
+                dead_by_daylight
+              </h4>
+              <p class="game-card__intro">
+                5
+              </p>
+            <!-- </div> -->
+            
+          </li>
+          <li class="glide__slide">
+            <!-- <div class="game-card"> -->
+              <img src="/static/images/blackops.jpeg" class="game-card__icon">
+              <h4 class="game-card__title">
+                blackops
+              </h4>
+              <p class="game-card__intro">
+                5
+              </p>
+            <!-- </div> -->
+            
+          </li>
+          <li class="glide__slide">
+            <!-- <div class="game-card"> -->
+              <img src="/static/images/animal_crossing.png" class="game-card__icon">
+              <h4 class="game-card__title">
+                animal_crossing
+              </h4>
+              <p class="game-card__intro">
+                5
+              </p>
+            <!-- </div> -->
+            
+          </li>
+        </ul>
       </div>
-
       <div class="glide__arrows" data-glide-el="controls">
-          <button class="glide__arrow glide__arrow--left game-card__btn game-card__btn-prev" data-glide-dir="<">
-            <!-- <img src="images/icons/arrow-back.svg" alt="arrow-back.svg" class="game-card__btn__img"> -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-            </svg>
-          </button>
-          <button class="glide__arrow glide__arrow--right game-card__btn game-card__btn-next" data-glide-dir=">">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-            </svg>
-          </button>
-      </div>
-  </div>
-</div>
-
-  <!-- {% for num in range (1,7) %} -->
-    <!-- <div class="col-sm-2">
-      <div class="card w-65" >
-        
-        <img src="/static/images/portal.jpeg" alt="portal">
-        <div class="card-body">
-          <h5 class="card-title text-center">Portal</h5>
-          <p class="card-text text-center">4.9/5</p>
-        </div>
+        <button class="glide__arrow glide__arrow--left game-card__btn game-card__btn-prev" data-glide-dir="<">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+          </svg>
+        </button>
+        <button class="glide__arrow glide__arrow--right game-card__btn game-card__btn-next" data-glide-dir=">">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+          </svg>
+        </button>
       </div>
     </div>
-
-{% endfor %} --> 
-
-
-<script>
-  var sliders = document.querySelectorAll('.glide');
-  // var glide = new Glide(sliders)
-  for (var i = 0; i < sliders.length; i++) {
-  var glide = new Glide(sliders[i], {
-    // options
-    type: 'carousel',
-    autoplay: 5000,
-    hoverpause: true,
-    gap: 25,
-    focusAt: 'center',
-    startAt: 0,
-    breakpoints: {
-      2000:{
-        perView: 3
-      },
-      1024:{
-        perView: 3
-      },
-      600:{
-        perview: 1
-      }
-    }
-  });
-} 
-  glide.mount()
-
-</script>
-
+</div>
+</div>
 <h2 class="p-2">our picks</h2>
 <div class="row p-5">
-
-  {% for num in range (1,7) %}
-    <div class="col-sm-2">
-      <div class="card w-65" >
-        
-        <img src="/static/images/portal.jpeg" alt="portal">
-        <div class="card-body">
-          <h5 class="card-title text-center">Portal</h5>
-          <p class="card-text text-center">4.9/5</p>
-        </div>
+  
+  <div class="glide-container">
+    <div class="glide">
+      <div class="glide__track" data-glide-el="track">
+        <ul class="glide__slides">
+          <li class="glide__slide">
+            <div class="game-card">
+              <img src="/static/images/blackops.jpeg" class="game-card__icon">
+              <h4 class="game-card__title">
+                Portal
+              </h4>
+              <p class="game-card__intro">
+                5
+              </p>
+            </div>
+          </li>
+          <li class="glide__slide">
+            <div class="game-card">
+              <img src="/static/images/minecraft.png" class="game-card__icon">
+              <h4 class="game-card__title">
+                minecraft
+              </h4>
+              <p class="game-card__intro">
+                5
+              </p>
+            </div>
+            
+          </li>
+          <li class="glide__slide">
+            <div class="game-card">
+              <img src="/static/images/dead_by_daylight.png" class="game-card__icon">
+              <h4 class="game-card__title">
+                dead_by_daylight
+              </h4>
+              <p class="game-card__intro">
+                5
+              </p>
+            </div>
+            
+          </li>
+          <li class="glide__slide">
+            <div class="game-card">
+              <img src="/static/images/blackops.jpeg" class="game-card__icon">
+              <h4 class="game-card__title">
+                blackops
+              </h4>
+              <p class="game-card__intro">
+                5
+              </p>
+            </div>
+            
+          </li>
+          <li class="glide__slide">
+            <div class="game-card">
+              <img src="/static/images/animal_crossing.png" class="game-card__icon">
+              <h4 class="game-card__title">
+                animal_crossing
+              </h4>
+              <p class="game-card__intro">
+                5
+              </p>
+            </div>
+            
+          </li>
+        </ul>
+      </div>
+      <div class="glide__arrows" data-glide-el="controls">
+        <button class="glide__arrow glide__arrow--left game-card__btn game-card__btn-prev" data-glide-dir="<">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+          </svg>
+        </button>
+        <button class="glide__arrow glide__arrow--right game-card__btn game-card__btn-next" data-glide-dir=">">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+          </svg>
+        </button>
       </div>
     </div>
-
-{% endfor %}
 </div>
-<h2 class="p-2">your favorites</h2>
-<div class="row p-5">
-  {% for num in range (1,7) %}
-    <div class="col-sm-2">
-      <div class="card w-65" >
-        
-        <img src="/static/images/portal.jpeg" alt="portal">
-        <div class="card-body">
-          <h5 class="card-title text-center">Portal</h5>
-          <p class="card-text text-center">4.9/5</p>
-        </div>
-      </div>
-    </div>
-
-{% endfor %}
 </div>
-{% endblock %}
+
+
+    <script>
+      var sliders = document.querySelectorAll('.glide');
+      // var glide = new Glide(sliders)
+      for (var i = 0; i < sliders.length; i++) {
+      var glide = new Glide(sliders[i], {
+        // options
+        type: 'carousel',
+        autoplay: 5000,
+        hoverpause: true,
+        gap: 25,
+        focusAt: 'center',
+        startAt: 0,
+        breakpoints: {
+          2000:{
+            perView: 4
+          },
+          1024:{
+            perView: 3
+          },
+          600:{
+            perview: 1
+          }
+        }
+      });
+    } 
+    var highSliders = document.querySelectorAll('.glide-high');
+      // var glide = new Glide(sliders)
+      for (var i = 0; i < highSliders.length; i++) {
+      var highGlide = new Glide(highSliders[i], {
+        // options
+        type: 'carousel',
+        autoplay: 5000,
+        hoverpause: true,
+        gap: 25,
+        focusAt: 'center',
+        startAt: 0,
+        breakpoints: {
+          2000:{
+            perView: 4
+          },
+          1024:{
+            perView: 3
+          },
+          600:{
+            perview: 1
+          }
+        }
+      });
+    } 
+      highGlide.mount()
+      glide.mount()
+    
+    </script>
+    {% endblock %}
