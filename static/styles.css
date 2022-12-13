@@ -6,6 +6,13 @@
     display: flex;
     justify-content: space-around;
 }
+
+.card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+}
+
 .staff-img-wh {
     height: 250px;
     width: 250px;
@@ -51,6 +58,10 @@
     height: 35px;
     margin: auto;
     text-align: center;
+}
+
+.row-margin {
+    margin-bottom: 1em;
 }
 
 #vapor_logo {

@@ -45,7 +45,10 @@ db.init_app(app)
 bcrypt = Bcrypt(app)
 
 # with app.app_context():
-    # print("____________________WITH CONTEXT_____________________")
+
+#with app.app_context():
+    #print("____________________WITH CONTEXT_____________________")
+
     # api_calls.populate_tags()
     # api_calls.populate_games(500)
     # all_tags = tag_repository_singleton.get_all_tags()
@@ -63,26 +66,6 @@ bcrypt = Bcrypt(app)
     # api_calls.fast_search_db("Project")
 
     # print("____________________________________________________")
-
-# app name
-@app.errorhandler(404)
-# inbuilt function which takes error as parameter
-def not_found(e):
-# defining function
- return render_template("errors/404.html")
-
-@app.errorhandler(405)
-# inbuilt function which takes error as parameter
-def not_found(e):
-# defining function
- return render_template("errors/405.html")
-
-@app.errorhandler(500)
-# inbuilt function which takes error as parameter
-def internal(e):
-# defining function
- return render_template("errors/500.html")
-
 
 # app name
 @app.errorhandler(404)
