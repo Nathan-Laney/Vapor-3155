@@ -1,0 +1,34 @@
+{% extends '_layout.html' %}
+
+{% block body %}
+<h2 class="mb-5">create game</h2>
+
+<!-- Added enctype so the form will accept images -->
+<form action="/createGame" method="POST" enctype="multipart/form-data"> 
+    <label for="game_id">game_id</label><br>
+    <input type="text" id="game_id" name="game_id" required><br><br>
+
+    <label for="title">title</label><br>
+    <input type="text" id="title" name="title" required><br><br>
+
+    <label for="publisher">publisher</label><br>
+    <input type="text" id="publisher" name="publisher" required><br><br>
+
+    <label for="description">description</label><br>
+    <input type="text" id="description" name="description" required><br><br>
+
+    <label for="developer">developer</label><br>
+    <input type="text" id="developer" name="developer" required><br><br>
+
+    <label for="rating">rating</label><br>
+    <input type="text" id="rating" name="rating" required><br><br>
+
+    <label for="release_date">release_date</label><br>
+    <input type="text" id="release_date" name="release_date" required><br><br>
+
+    <label for="thumbnail_link">thumbnail_link</label><br>
+    <input type="file" name="thumbnail_link" required><br><br>
+
+    <button type="submit" class="btn btn-primary">submit</button><br>
+</form>
+{% endblock %}
