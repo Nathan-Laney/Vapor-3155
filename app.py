@@ -44,10 +44,13 @@ app.secret_key = os.getenv('APP_SECRET_KEY')
 db.init_app(app)
 bcrypt = Bcrypt(app)
 
+current_page = "index"
 with app.app_context():
+    #print("____________________WITH CONTEXT_____________________")
     print("____________________WITH CONTEXT_____________________")
-    # api_calls.populate_tags()
-    # api_calls.populate_games(500)
+
+    api_calls.populate_tags()
+    api_calls.populate_games(500)
     # all_tags = tag_repository_singleton.get_all_tags()
     # print(all_tags)
     # for i in all_tags:
@@ -62,12 +65,15 @@ with app.app_context():
     # api_calls.search_db("Fortnite")
     # api_calls.fast_search_db("Project")
 
+
+    #print("____________________________________________________")
+
     print("____________________________________________________")
 
 # app name
 @app.errorhandler(404)
 # inbuilt function which takes error as parameter
-def not_found(e):
+def not_found_404(e):
     # defining function
     return render_template("errors/404.html")
 
