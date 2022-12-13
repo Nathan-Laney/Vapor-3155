@@ -44,13 +44,11 @@ app.secret_key = os.getenv('APP_SECRET_KEY')
 db.init_app(app)
 bcrypt = Bcrypt(app)
 
-# with app.app_context():
-
-#with app.app_context():
+with app.app_context():
     #print("____________________WITH CONTEXT_____________________")
 
-    # api_calls.populate_tags()
-    # api_calls.populate_games(500)
+    api_calls.populate_tags()
+    api_calls.populate_games(500)
     # all_tags = tag_repository_singleton.get_all_tags()
     # print(all_tags)
     # for i in all_tags:
@@ -70,21 +68,21 @@ bcrypt = Bcrypt(app)
 # app name
 @app.errorhandler(404)
 # inbuilt function which takes error as parameter
-def not_found(e):
+def not_found_404(e):
 # defining function
- return render_template("errors/404.html")
+    return render_template("errors/404.html")
 
 @app.errorhandler(405)
 # inbuilt function which takes error as parameter
 def not_found(e):
 # defining function
- return render_template("errors/405.html")
+    return render_template("errors/405.html")
 
 @app.errorhandler(500)
 # inbuilt function which takes error as parameter
 def internal(e):
 # defining function
- return render_template("errors/500.html")
+    return render_template("errors/500.html")
 
 
 @app.get('/')
@@ -131,7 +129,6 @@ def profile():
     #TODO: If the user isnt logged in, dont let them go to the profile page STATUS: Almost Complete
     #getting a Key Error
     return render_template('profile.html', current_user=current_user, profile_path=session['user']['profile_path'])
-
 
 
 @app.get('/post_review')
