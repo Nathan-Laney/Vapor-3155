@@ -14,7 +14,6 @@ from datetime import date
     # graphics_score =        db.Column(db.Integer, nullable=True)
     # description =           db.Column(db.String, nullable=False)
 
-
 class ReviewRepository:
 
     def get_all_reviews(self) -> list[review]:
@@ -25,12 +24,12 @@ class ReviewRepository:
         found_reviews: review = review.query.get_or_404(review_id)
         return found_reviews
 
-    def create_review(self, author_id:int, game_id:int, date:date, rating_score:int, replayability_score:int, graphics_score:int, description:str) -> review:
+    def create_review(self, author_id:int, game_id:int, date:date, rating_score:int, description:str) -> review:
         exists = db.session.query(review.review_id).filter_by(game_id = game_id, author_id = author_id).first()
         if (exists is not None):
             return exists
         else:
-            new_review = review(date=date, rating_score=rating_score, replayability_score=replayability_score, graphics_score = graphics_score, description = description)
+            new_review = review(date=date, rating_score=rating_score, description = description)
             db.session.add(new_review)
             db.session.commit()
             return new_review

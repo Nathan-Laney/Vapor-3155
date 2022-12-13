@@ -29,6 +29,7 @@ import json
 from src.repositories.tag_repository import tag_repository_singleton
 from src.repositories.game_repository import game_repository_singleton
 from src.repositories.user_repository import user_repository_singleton
+from src.repositories.review_repository import review_repository_singleton
 
 load_dotenv()
 app = Flask(__name__)
@@ -67,36 +68,33 @@ with app.app_context():
 @app.errorhandler(404)
 # inbuilt function which takes error as parameter
 def not_found(e):
-# defining function
- return render_template("errors/404.html")
+    # defining function
+    return render_template("errors/404.html")
 
 @app.errorhandler(405)
 # inbuilt function which takes error as parameter
 def not_found(e):
-# defining function
- return render_template("errors/405.html")
+    # defining function
+    return render_template("errors/405.html")
 
 @app.errorhandler(500)
 # inbuilt function which takes error as parameter
 def internal(e):
-# defining function
- return render_template("errors/500.html")
+    # defining function
+    return render_template("errors/500.html")
 
 
 @app.get('/')
 def index():
     return render_template('index.html')
 
-
 @app.route('/header')
 def header():
     return render_template('index.html')
 
-
 @app.get('/about')
 def about():
     return render_template('about.html')
-
 
 @app.get('/search')
 def search():
@@ -122,29 +120,55 @@ def profile():
     #getting a Key Error
     return render_template('profile.html', current_user=current_user, profile_path=session['user']['profile_path'])
 
+# @app.get('/post_review')
+# def post_review():    
+#     return render_template('post_review.html')
 
+@app.get('/createGame')
+def createGame():
+    #created_game = game_repository_singleton.create_game(game_id = 1, title = 'Portal 2', publisher = 'Valve', description = 'Playing with Portals', developer='Valve', thumbnail_link='Vapor-3155/static/images/portal.jpeg', release_date='4/18/2011', rating=5)
+    return render_template('createGame.html')
 
-@app.get('/post_review')
-def post_review():    
-    return render_template('post_review.html')
-
-
-@app.get('/gamepage')
-
-def gamepage():
+@app.get('/<game_id>')
+def gamepage(game_id):
     current_page = "gamepage"
+    current_game = game_repository_singleton.get_game_by_id(game_id)
+    #trying to get user pfp for review
+    current_user = user_repository_singleton.get_user_by_id(user_id=session['user']['user_id'])
+    print(f'current user is',current_user)
+    profile_path=session['user']['profile_path']
+    print(profile_path)
+
     #single_game = game_repository.get_game_by_id(game_id)
     #existing_game = Game.query.filter_by(single_game=single_game).first()
-    return render_template('gamepage.html') #existing_game=existing_game
+    return render_template('gamepage.html', current_game=current_game, current_user=current_user, profile_path=session['user']['profile_path']) 
 
+@app.post('/<game_id>')
+def post_review(game_id):
+    current_game = game_repository_singleton.get_game_by_id(game_id)
+    current_user = user_repository_singleton.get_user_by_id(user_id=session['user']['user_id'])
+    print(current_user)
+    user_review = request.form.get('review')
+    user_rating = request.form.get('rating')
+    
+    #def create_review(self, author_id:int, game_id:int, date:date, rating_score:int, description:str)
+    new_review = review_repository_singleton.create_review(current_user.user_id, current_game.game_id, current_game.release_date, user_rating, user_review)
+    #new_review.author_id = current_user.user_id
+    #new_review.game_id = current_game.game_id
+    current_game.user_rating.append(new_review)
+    db.session.add(new_review)
+    db.session.commit()
+
+    print(user_review)
+    print(user_rating)
+
+    return redirect('/<game_id>')
 
 # This is the start of the login in logic
-
 
 @app.get('/login')
 def login():
     return render_template('login.html')
-
 
 @app.post('/login')
 def loginform():
@@ -176,19 +200,14 @@ def loginform():
     return redirect('/profile')
 # this is a post... you might have to make a get so that the page will load.....
 
-
 @app.get('/flashPage')
 def temp():
     return render_template('flashPage.html')
-
-
-
 
 @app.get('/register')
 def register():
     current_page = "register"
     return render_template('register.html')
-
 
 #found some errors in register. login should work fine when these are fixed
 @app.post('/register')
@@ -208,7 +227,6 @@ def registerForm():
 
 #     if (existing_email and existing_user):
 #         return redirect('/login')
-
 
     bcryptRounds = int(os.getenv('BCRYPT_ROUNDS', 4)) # second parameter is the default fallback
     #rounds caused this to fail
@@ -253,7 +271,6 @@ def registerForm():
 @app.get('/resetPassword')
 def resetPassword():
     return render_template('resetPassword.html')
-
 
 @app.get('/logout')
 def logout():
