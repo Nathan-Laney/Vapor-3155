@@ -153,10 +153,17 @@ def profile():
         return redirect('/login')
     # TODO: get the current session user STATUS: Done
     # current_user = User.query.filter_by(user_id=session['user']['user_id']).first() OLD
-    current_user = user_repository_singleton.get_user_by_id(
-        user_id=session['user']['user_id'])
+    current_user = user_repository_singleton.get_user_by_id(user_id=session['user']['user_id'])
+    
+    profile_path=session['user']['profile_path']
+    reviews = review_repository_singleton.get_review_by_author(current_user.user_id)
+    print(reviews)
+    #print(current_user.username)
+    #TODO: If the user isnt logged in, dont let them go to the profile page STATUS: Almost Complete
+    #getting a Key Error
+    return render_template('profile.html', current_user=current_user, profile_path=profile_path, reviews=reviews)
+    
 
-    profile_path = session['user']['profile_path']
 
     # print(current_user.username)
     # TODO: If the user isnt logged in, dont let them go to the profile page STATUS: Almost Complete
@@ -164,31 +171,31 @@ def profile():
     return render_template('profile.html', current_user=current_user, profile_path=profile_path)
 
 
-@app.get('/post_review')
-def post_review():
-    if 'user' in session:
-        profile_path = session['user']['profile_path']
-    else:
-        profile_path = None
-    return render_template('post_review.html', profile_path=profile_path)
+# @app.get('/post_review')
+# def post_review():    
+#     if 'user' in session:
+#         profile_path=session['user']['profile_path']
+#     else:
+#         profile_path= None
+#     return render_template('post_review.html', profile_path=profile_path)
 
 
-@app.get('/gamepage')
-def gamepage():
-    current_page = "gamepage"
-    if 'user' in session:
-        profile_path = session['user']['profile_path']
-    else:
-        profile_path = None
-    #single_game = game_repository.get_game_by_id(game_id)
-    #existing_game = Game.query.filter_by(single_game=single_game).first()
-    # existing_game=existing_game
-    current_user = user_repository_singleton.get_user_by_id(user_id=session['user']['user_id'])
-    reviews = review_repository_singleton.get_review_by_author(
-        current_user.user_id)
-    print(reviews)
-    #  existing_user = user_repository_singleton.get_user_by_email(email=email) #type: ignore
-    return render_template('profile.html', current_user=current_user, profile_path=session['user']['profile_path'], reviews=reviews, profile_path=profile_path)
+# @app.get('/gamepage')
+# def gamepage():
+#     current_page = "gamepage"
+#     if 'user' in session:
+#         profile_path=session['user']['profile_path']
+#     else:
+#         profile_path= None
+#     #single_game = game_repository.get_game_by_id(game_id)
+#     #existing_game = Game.query.filter_by(single_game=single_game).first()
+#     #existing_game=existing_game
+#     current_user = user_repository_singleton.get_user_by_id(user_id=session['user']['user_id'])
+#     reviews = review_repository_singleton.get_review_by_author(current_user.user_id)
+#     print(reviews)
+#     #  existing_user = user_repository_singleton.get_user_by_email(email=email) #type: ignore
+#     return render_template('profile.html', current_user=current_user, reviews=reviews, profile_path=profile_path)
+
 
 # @app.get('/post_review')
 # def post_review():
