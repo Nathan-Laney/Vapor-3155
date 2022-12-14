@@ -20,6 +20,7 @@ from datetime import date, datetime
 import api_calls                              # UNCOMMENT FOR FRONTEND
 from werkzeug.utils import secure_filename
 import json
+from datetime import date
 
 # Imports for our database tables. These are in a specific order, 
 # to correctly populate the foreign keys. 
@@ -126,43 +127,47 @@ def profile():
 
 @app.get('/createGame')
 def createGame():
-    #created_game = game_repository_singleton.create_game(game_id = 1, title = 'Portal 2', publisher = 'Valve', description = 'Playing with Portals', developer='Valve', thumbnail_link='Vapor-3155/static/images/portal.jpeg', release_date='4/18/2011', rating=5)
     return render_template('createGame.html')
 
 @app.get('/<game_id>')
 def gamepage(game_id):
-    current_page = "gamepage"
     current_game = game_repository_singleton.get_game_by_id(game_id)
-    #trying to get user pfp for review
     current_user = user_repository_singleton.get_user_by_id(user_id=session['user']['user_id'])
-    print(f'current user is',current_user)
     profile_path=session['user']['profile_path']
-    print(profile_path)
+
+    reviews = review_repository_singleton.get_all_reviews()
+    reviews_length = len(reviews)
+    print(f'reviews length is ',reviews_length)
 
     #single_game = game_repository.get_game_by_id(game_id)
     #existing_game = Game.query.filter_by(single_game=single_game).first()
-    return render_template('gamepage.html', current_game=current_game, current_user=current_user, profile_path=session['user']['profile_path']) 
+    return render_template('gamepage.html', current_game=current_game, current_user=current_user, profile_path=session['user']['profile_path'], reviews_length=reviews_length, reviews=reviews) 
+
+    #return render_template('search.html', results_found = search_result_array_length, search_results=search_result_array, search_query=q)
+
 
 @app.post('/<game_id>')
 def post_review(game_id):
     current_game = game_repository_singleton.get_game_by_id(game_id)
     current_user = user_repository_singleton.get_user_by_id(user_id=session['user']['user_id'])
-    print(current_user)
-    user_review = request.form.get('review')
-    user_rating = request.form.get('rating')
-    
-    #def create_review(self, author_id:int, game_id:int, date:date, rating_score:int, description:str)
-    new_review = review_repository_singleton.create_review(current_user.user_id, current_game.game_id, current_game.release_date, user_rating, user_review)
+    print(f'current user is',current_user)
+    user_review = request.form["review"]
+    user_rating = request.form.get('rating', type=int)
+    today = date.today()
+    print(f'review is',user_review)
+
+    if user_rating < 0 or user_rating > 5:
+        abort(400)
+
+    #create_review(self, author_id:int, game_id:int, review_date:date, rating_score:int, description:str)    
+    new_review = review_repository_singleton.create_review(current_user.user_id, current_game.game_id, today, user_rating, user_review)
     #new_review.author_id = current_user.user_id
     #new_review.game_id = current_game.game_id
-    current_game.user_rating.append(new_review)
+    #current_game.user_rating.append(new_review)
     db.session.add(new_review)
     db.session.commit()
 
-    print(user_review)
-    print(user_rating)
-
-    return redirect('/<game_id>')
+    return redirect(f'/{game_id}')
 
 # This is the start of the login in logic
 
