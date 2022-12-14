@@ -44,13 +44,11 @@ app.secret_key = os.getenv('APP_SECRET_KEY')
 db.init_app(app)
 bcrypt = Bcrypt(app)
 
-current_page = "index"
-with app.app_context():
+# with app.app_context():
     #print("____________________WITH CONTEXT_____________________")
-    print("____________________WITH CONTEXT_____________________")
 
-    api_calls.populate_tags()
-    api_calls.populate_games(500)
+    # api_calls.populate_tags()
+    # api_calls.populate_games(500)
     # all_tags = tag_repository_singleton.get_all_tags()
     # print(all_tags)
     # for i in all_tags:
@@ -65,10 +63,7 @@ with app.app_context():
     # api_calls.search_db("Fortnite")
     # api_calls.fast_search_db("Project")
 
-
-    #print("____________________________________________________")
-
-    print("____________________________________________________")
+    # print("____________________________________________________")
 
 # app name
 @app.errorhandler(404)
@@ -92,7 +87,13 @@ def internal(e):
 
 @app.get('/')
 def index():
-    return render_template('index.html')
+    highest_rated = game_repository_singleton.get_highest_rating()
+
+
+    #ourpicks = fortnite, skyrim, valorant, portal 2, dishonored, fallout new vegas
+    our_picks = []
+    user_favorite = [] 
+    return render_template('index.html', highest_rated = highest_rated, our_picks = our_picks, user_favorite = user_favorite)
 
 @app.route('/header')
 def header():
@@ -269,10 +270,26 @@ def registerForm():
         flash('Enter a username')
         return redirect('login')
     new_user = user_repository_singleton.create_user(username=username, password=hashed_password, first_name=first_name, email=email, profile_path=safe_filename)
-    
+
     db.session.add(new_user)
     db.session.commit()
     return redirect('/login')
+
+#     bcryptRounds = os.getenv('BCRYPT_ROUNDS')
+#     if bcryptRounds == 'None':
+#         print("Defaulting bcryptRounds (error)")
+#         bcryptRounds = 20000 # If bcrypt rounds is not found, falls back to default value of 20k
+
+#     hashed_bytes = bcrypt.generate_password_hash(
+#         password, bcryptRounds)
+#     hashed_password = hashed_bytes.decode('utf-8')
+
+#     new_user = user_data(username, hashed_password, first_name, email)
+#     db.session.add(new_user)
+#     db.session.commit()
+#     return redirect('/login')
+
+
 
 @app.get('/resetPassword')
 def resetPassword():
