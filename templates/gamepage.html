@@ -1,85 +1,85 @@
 {% extends '_layout.html' %}
 
 {% block body %}
-<h1 class="p-2">gamepage</h1>
 
-<div style="display:flex">
-    <div class="card w-10, h-10" style="float:left">
-        <img src="static/images/blackops.jpeg" style="width: 250px; height: 400px;">
-        <div class="card-body">
-            <h5 class="card-title text-center">COD</h5>
-            <p class="card-text text-center">4</p>
-        </div>
+<!-- game card with pic -->
+<h1 class="p-2 mb-4">{{ current_game.title }}</h1>
+<div class="d-inline-flex">
+    <div class="card" style="width:18em">
+      <img class="card-img-top" src="{{ current_game.thumbnail_link }}" alt='{{ current_game.title }}'>
+      <div class="card-body">
+        <h5 class="card-title text-center">{{ current_game.title }}</h5>
+        <p class="card-text text-center">{{ current_game.rating }}</p>
+      </div>
     </div>
-    <!--
-    <h4 class="mb-5">description: </h4>
-        <div class="log_output">
-            <p>Ambitioni dedisse scripsisse iudicaretur. Cras mattis iudicium purus sit amet fermentum. Donec sed odio operae, eu vulputate felis rhoncus. Praeterea iter est quasdam res quas ex communi. At nos hinc posthac, sitientis piros Afros. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Cras mattis iudicium purus sit amet fermentum.</p>
-        </div>
-    -->
-    
-    <div class="ms-3" class="flex-container">
-        <h4 class="mb-5">description:</h4>
+    <!-- game info -->
+    <div class="ml-4" class="flex-container">
+        <h4>description:</h4>
+        <p>{{ current_game.description }}</p>
         <h5>publisher: </h5>
+        <p>{{ current_game.publisher }}</p>
         <h5>developer: </h5>
+        <p>{{ current_game.developer }}</p>
         <h5>tags: </h5>
+        <p>{{ current_game.tags }}</p>
         <h5>rating: </h5>
-        <h5>replayability: </h5>
-        <h5>graphics: </h5> 
+        <p>{{ current_game.rating }}</p>
     </div>
-    
 </div>
-<div>
-    <h2 class="mt-5 mb-3">ratings</h2>
 
-<section style="background-color: #8abeb7;">
-    <div class="container my-5 py-5 text-dark">
-        <div class="card w-10, h-10 mb-3">
-            <div class="card-body p-1">
-                <div class="d-flex flex-start w-100 mt-3">
-                <img class="rounded-circle shadow-1-strong me-3"
-                    src="../static/images/kat_pfp.png" alt="avatar" width="60"
-                    height="60" />
-                <div class="w-100">
-                    <h5>Leave a Review</h5>
-                    <div class="form-group">
-                    <textarea class="form-control" id="textAreaExample" rows="4"></textarea>
-                    <div class="mt-4">
-                    <label class="form-label" for="rating">Rating</label>
-                    <input class="form-label" type="number" id="rating" name="rating" autocomplete="off" min="1" max="5">    
-                    <label for="replayability">Replayability</label>
-                    <input type="number" id="replayability" name="replayability" autocomplete="off" min="1" max="5">
-                    <label for="graphics">Graphics</label>
-                    <input type="number" id="graphics" name="graphics" autocomplete="off" min="1" max="5"><br><br>
-                </div>
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-success me-md-2" type="button">Submit</button>
-                </div>
-                </div>
+<div>
+    <h2 class="mt-5">ratings</h2>
+    <!-- rating section -->
+    <section style="background-color: #8abeb7;">
+        <div class="container my-5 py-5 text-dark">
+            <div class="card w-10, h-10 mb-3">
+                <div class="card-body p-1">
+                    <div class="d-flex flex-start w-100 mt-3">
+                    <!-- pfp -->
+                    <img class="rounded-circle shadow-1-strong me-3"
+                        src="./static/profile-pics/{{ profile_path }}" alt="pfp" width="60"
+                        height="60" />
+                    <!-- write your review -->
+                    <div class="w-100">
+                        <h5>leave a review</h5>
+                        <div class="form-group">
+                        <textarea class="form-control" id="textAreaExample" rows="4"></textarea>
+                        <div class="mt-4">
+                        <label class="form-label" for="rating">rating</label>
+                        <input class="form-label" type="number" id="rating" name="rating" autocomplete="off" min="1" max="5">    
+                    </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button class="btn btn-success me-md-2" type="button">submit</button>
+                    </div>
+                    </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-      
 
-    <div class="card w-10, h-10 mb-3">
-        <div class="card-body">
-            <h5 class="card-title text-left">rating 1</h5>
-            <h6 class="card-title text-right">user xy</h6>
-            <p class="card-text text-left">this game SUCKS!!</p>
-            <p class="card-text text-left"><strong>rating:</strong> 2.0 &nbsp <strong>replayability:</strong> 1.0 &nbsp <strong>graphics:</strong> 2.0</p> 
+        
+        
+        <!-- stand-in reviews 
+        <div class="card w-10, h-10 mb-3">
+            <div class="card-body">
+                <h5 class="card-title text-left">rating 1</h5>
+                <h6 class="card-title text-right">user xy</h6>
+                <p class="card-text text-left">this game SUCKS!!</p>
+                <p class="card-text text-left"><strong>rating:</strong> 2.0 &nbsp</p> 
+            </div>
         </div>
-    </div>
 
-    <div class="card w-10, h-10 mb-3">
-        <div class="card-body">
-            <h5 class="card-title text-left">rating 2</h5>
-            <h6 class="card-title text-right">user ab</h6>
-            <p class="card-text text-left">i would sell my firstborn to play this game again for the first time :)</p>
-            <p class="card-text text-left"><strong>rating:</strong> 4.0 &nbsp <strong>replayability:</strong> 5.0 &nbsp <strong>graphics:</strong> 3.0</p> 
+        <div class="card w-10, h-10 mb-3">
+            <div class="card-body">
+                <h5 class="card-title text-left">rating 2</h5>
+                <h6 class="card-title text-right">user ab</h6>
+                <p class="card-text text-left">i would sell my firstborn to play this game again for the first time :)</p>
+                <p class="card-text text-left"><strong>rating:</strong> 4.0 &nbsp</p> 
+            </div>
         </div>
-    </div>
-</section>
+        -->
+
+    </section>
 </div>
 
 {% endblock %}

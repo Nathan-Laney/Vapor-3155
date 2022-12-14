@@ -90,7 +90,45 @@
     color: #969896;
 }
 
+
 .pfp-border {
     border: 3px solid #969896;
     border-radius: 10px;
+}
+
+.glide-container{
+    /* min-height : 300px;
+    max-height : 300px;  */
+    /* max-height: 500px; */
+    overflow: hidden;
+    
+    /* width : 75%;
+    height: 75%; */
+}
+
+.game-card {
+    max-width: 200px;
+    height: 250px;
+}
+
+.game-card__intro{
+
+}
+
+.game-card__title{
+
+}
+
+.game-card__btn{
+
+}
+.game-card__btn-prev{
+
+}
+.game-card__btn-next{
+    
+}
+.game-card__icon{
+    /* width: inherit; */
+    height: 250px;
 }
