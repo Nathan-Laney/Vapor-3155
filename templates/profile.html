@@ -56,7 +56,22 @@
       <h5 class="card-title bio-title vapor-color">{{ current_user.first_name }}'s Reviews</h5>
     </div>
 
-  </div>
+
+    </div>
+
+    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+      <h5 class="card-title bio-title vapor-color">{{ current_user.first_name }}'s Reviews</h5>
+      {% if reviews %}
+      {% for i in range(0, reviews_len) %}
+      <p class="card-text text-left">{{ reviews[i]["description"] }}</p>
+      {% endfor %}
+
+      {% else %}
+      <h1>No Reviews</h1>
+      {% endif %}
+    </div>
+
+
 </div>
 </div>
   
