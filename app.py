@@ -44,13 +44,11 @@ app.secret_key = os.getenv('APP_SECRET_KEY')
 db.init_app(app)
 bcrypt = Bcrypt(app)
 
-current_page = "index"
-with app.app_context():
+# with app.app_context():
     #print("____________________WITH CONTEXT_____________________")
-    print("____________________WITH CONTEXT_____________________")
 
-    api_calls.populate_tags()
-    api_calls.populate_games(500)
+    # api_calls.populate_tags()
+    # api_calls.populate_games(500)
     # all_tags = tag_repository_singleton.get_all_tags()
     # print(all_tags)
     # for i in all_tags:
@@ -65,45 +63,45 @@ with app.app_context():
     # api_calls.search_db("Fortnite")
     # api_calls.fast_search_db("Project")
 
-
-    #print("____________________________________________________")
-
-    print("____________________________________________________")
+    # print("____________________________________________________")
 
 # app name
 @app.errorhandler(404)
 # inbuilt function which takes error as parameter
 def not_found_404(e):
-# defining function
+    # defining function
     return render_template("errors/404.html")
 
 @app.errorhandler(405)
 # inbuilt function which takes error as parameter
 def not_found(e):
-# defining function
+    # defining function
     return render_template("errors/405.html")
 
 @app.errorhandler(500)
 # inbuilt function which takes error as parameter
 def internal(e):
-# defining function
+    # defining function
     return render_template("errors/500.html")
 
 
 @app.get('/')
 def index():
-    return render_template('index.html')
+    highest_rated = game_repository_singleton.get_highest_rating()
 
+
+    #ourpicks = fortnite, skyrim, valorant, portal 2, dishonored, fallout new vegas
+    our_picks = []
+    user_favorite = [] 
+    return render_template('index.html', highest_rated = highest_rated, our_picks = our_picks, user_favorite = user_favorite)
 
 @app.route('/header')
 def header():
     return render_template('index.html')
 
-
 @app.get('/about')
 def about():
     return render_template('about.html')
-
 
 @app.get('/search')
 def search():
@@ -132,28 +130,55 @@ def profile():
     #  existing_user = user_repository_singleton.get_user_by_email(email=email) #type: ignore
     return render_template('profile.html', current_user=current_user, profile_path=session['user']['profile_path'], reviews=reviews)
 
+# @app.get('/post_review')
+# def post_review():    
+#     return render_template('post_review.html')
 
-@app.get('/post_review')
-def post_review():    
-    return render_template('post_review.html')
+@app.get('/createGame')
+def createGame():
+    #created_game = game_repository_singleton.create_game(game_id = 1, title = 'Portal 2', publisher = 'Valve', description = 'Playing with Portals', developer='Valve', thumbnail_link='Vapor-3155/static/images/portal.jpeg', release_date='4/18/2011', rating=5)
+    return render_template('createGame.html')
 
-
-@app.get('/gamepage')
-
-def gamepage():
+@app.get('/<game_id>')
+def gamepage(game_id):
     current_page = "gamepage"
+    current_game = game_repository_singleton.get_game_by_id(game_id)
+    #trying to get user pfp for review
+    current_user = user_repository_singleton.get_user_by_id(user_id=session['user']['user_id'])
+    print(f'current user is',current_user)
+    profile_path=session['user']['profile_path']
+    print(profile_path)
+
     #single_game = game_repository.get_game_by_id(game_id)
     #existing_game = Game.query.filter_by(single_game=single_game).first()
-    return render_template('gamepage.html') #existing_game=existing_game
+    return render_template('gamepage.html', current_game=current_game, current_user=current_user, profile_path=session['user']['profile_path']) 
 
+@app.post('/<game_id>')
+def post_review(game_id):
+    current_game = game_repository_singleton.get_game_by_id(game_id)
+    current_user = user_repository_singleton.get_user_by_id(user_id=session['user']['user_id'])
+    print(current_user)
+    user_review = request.form.get('review')
+    user_rating = request.form.get('rating')
+    
+    #def create_review(self, author_id:int, game_id:int, date:date, rating_score:int, description:str)
+    new_review = review_repository_singleton.create_review(current_user.user_id, current_game.game_id, current_game.release_date, user_rating, user_review)
+    #new_review.author_id = current_user.user_id
+    #new_review.game_id = current_game.game_id
+    current_game.user_rating.append(new_review)
+    db.session.add(new_review)
+    db.session.commit()
+
+    print(user_review)
+    print(user_rating)
+
+    return redirect('/<game_id>')
 
 # This is the start of the login in logic
-
 
 @app.get('/login')
 def login():
     return render_template('login.html')
-
 
 @app.post('/login')
 def loginform():
@@ -185,19 +210,14 @@ def loginform():
     return redirect('/profile')
 # this is a post... you might have to make a get so that the page will load.....
 
-
 @app.get('/flashPage')
 def temp():
     return render_template('flashPage.html')
-
-
-
 
 @app.get('/register')
 def register():
     current_page = "register"
     return render_template('register.html')
-
 
 #found some errors in register. login should work fine when these are fixed
 @app.post('/register')
@@ -217,7 +237,6 @@ def registerForm():
 
 #     if (existing_email and existing_user):
 #         return redirect('/login')
-
 
     bcryptRounds = int(os.getenv('BCRYPT_ROUNDS', 4)) # second parameter is the default fallback
     #rounds caused this to fail
@@ -254,15 +273,30 @@ def registerForm():
         flash('Enter a username')
         return redirect('login')
     new_user = user_repository_singleton.create_user(username=username, password=hashed_password, first_name=first_name, email=email, profile_path=safe_filename)
-    
+
     db.session.add(new_user)
     db.session.commit()
     return redirect('/login')
 
+#     bcryptRounds = os.getenv('BCRYPT_ROUNDS')
+#     if bcryptRounds == 'None':
+#         print("Defaulting bcryptRounds (error)")
+#         bcryptRounds = 20000 # If bcrypt rounds is not found, falls back to default value of 20k
+
+#     hashed_bytes = bcrypt.generate_password_hash(
+#         password, bcryptRounds)
+#     hashed_password = hashed_bytes.decode('utf-8')
+
+#     new_user = user_data(username, hashed_password, first_name, email)
+#     db.session.add(new_user)
+#     db.session.commit()
+#     return redirect('/login')
+
+
+
 @app.get('/resetPassword')
 def resetPassword():
     return render_template('resetPassword.html')
-
 
 @app.get('/logout')
 def logout():
