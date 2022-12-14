@@ -149,11 +149,12 @@ def profile():
     current_user = user_repository_singleton.get_user_by_id(user_id=session['user']['user_id'])
     
     profile_path=session['user']['profile_path']
-    
+    reviews = review_repository_singleton.get_review_by_author(current_user.user_id)
+    print(reviews)
     #print(current_user.username)
     #TODO: If the user isnt logged in, dont let them go to the profile page STATUS: Almost Complete
     #getting a Key Error
-    return render_template('profile.html', current_user=current_user, profile_path=profile_path)
+    return render_template('profile.html', current_user=current_user, profile_path=profile_path, reviews=reviews)
     
 
 
