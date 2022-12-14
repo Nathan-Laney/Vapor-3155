@@ -122,6 +122,7 @@ def profile():
     #TODO: get the current session user STATUS: Done
     # current_user = User.query.filter_by(user_id=session['user']['user_id']).first() OLD
     current_user = user_repository_singleton.get_user_by_id(user_id=session['user']['user_id'])
+<<<<<<< Updated upstream
     #print(current_user.username)
     #TODO: If the user isnt logged in, dont let them go to the profile page STATUS: Almost Complete
     #getting a Key Error
@@ -129,6 +130,25 @@ def profile():
     print(reviews)
     #  existing_user = user_repository_singleton.get_user_by_email(email=email) #type: ignore
     return render_template('profile.html', current_user=current_user, profile_path=session['user']['profile_path'], reviews=reviews)
+=======
+    
+    profile_path=session['user']['profile_path']
+    reviews = review_repository_singleton.get_review_by_author(current_user.user_id)
+    reviews_len = len(reviews)
+    print(reviews)
+    #print(current_user.username)
+    #TODO: If the user isnt logged in, dont let them go to the profile page STATUS: Almost Complete
+    #getting a Key Error
+    return render_template('profile.html', current_user=current_user, profile_path=profile_path, reviews=reviews, reviews_len=reviews_len)
+    
+
+
+    # print(current_user.username)
+    # TODO: If the user isnt logged in, dont let them go to the profile page STATUS: Almost Complete
+    # getting a Key Error
+    return render_template('profile.html', current_user=current_user, profile_path=profile_path)
+
+>>>>>>> Stashed changes
 
 # @app.get('/post_review')
 # def post_review():    
