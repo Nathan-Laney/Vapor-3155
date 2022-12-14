@@ -2,6 +2,7 @@
 from src.models.game import game
 from models import db
 from datetime import date
+from sqlalchemy import desc, select
 
 
 # credit Krevat for code inspo
@@ -30,6 +31,13 @@ class GameRepository:
         found_game: game = game.query.get_or_404(game_id)
         return found_game
 
+    def get_highest_rating(self):
+        highest_game = []
+        # sorted_games: list[game] = select(game).order_by(desc(game.rating))
+        sorted_games: list[game] = db.session.query(game).order_by(desc(game.rating))
+        for i in range(20):
+            highest_game.append(sorted_games[i])
+        return highest_game
 
     def create_game(self, game_id: int, title: str,  publisher: str, description: str, developer: str, thumbnail_link: str, release_date: date, rating:float) -> game:
         # (self, title: str,  publisher: str, description: str, developer: str, thumbnail_link: str, release_date: datetime)
@@ -55,6 +63,11 @@ class GameRepository:
             db.session.commit()
             return one_game
     
+    def delete_game(self, user_id: int): 
+        found_user: game = game.query.get_or_404(user_id)
+        db.session.delete(game)
+        db.session.commit()
+        return True
 
 # Singleton to be used in other modules
 game_repository_singleton = GameRepository()

@@ -3,58 +3,61 @@
 {% block body %}
 <div id="master-div">
     <h1 class="margin-para vapor-color profile-margin">
-      Hello {{ current_user.first_name }}!
+      Hello, {{ current_user.first_name }}!
     </h1>
 <img class="pfp-image-circle margin-para pfp-margin" src="./static/profile-pics/{{ profile_path }}" alt="profile-picture">
 <h4 class="margin-para gray-color profile-margin">{{ current_user.username }}</h4>
-<div class="card text-center margin-para margin-right profile-margin">
-    <div class="card-header">
-      <ul class="nav nav-tabs card-header-tabs">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="true" href="#">Bio</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-current="true" href="#">My games</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-current="true" href="#">My Reviews</a>
-        </li>
-      </ul>
+
+<div class="profile-margin margin-para pfp-border">
+  <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Bio</a>
+      <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">My Games</a>
+      <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">My Reviews</a>
     </div>
-    <div class="card-body">
+  </nav>
+  <div class="tab-content margin-para margin-right profile-margin" id="nav-tabContent">
+
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
       <h5 class="card-title bio-title vapor-color">{{ current_user.first_name }}'s Bio</h5>
-      <p class="card-text bio-text">Sample text</p>
+      <p class="card-text bio-text">Sample text</p></div>
+
+    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
       <h5 class="card-title bio-title vapor-color">{{ current_user.first_name }}'s Top 3 Games</h5>
-      <div class="top-games-card-group">
-        <div>
-            <div class="card w-10, h-10">
-                <img src="./static/images/minecraft.png" alt="Minecraft" style="width: 250px; height: 250px;">
-                <div class="card-body">
-                    <h5 class="card-title text-center">Minecraft</h5>
-                </div>
-            </div>
-        </div>
-        <div>
-            <div class="card w-10, h-10">
-                <img src="./static/images/animal_crossing.png" alt="Animal Crossing: Wii" style="width: 250px; height: 250px;">
-                <div class="card-body">
-                    <h5 class="card-title text-center">Animal Crossing: Wii</h5>
-                </div>
-            </div>
-        </div>
-        <div>
-            <div class="card w-10, h-10">
-                <img src="./static/images/dead_by_daylight.png" alt="Dead by Daylight" style="width: 250px; height: 250px;">
-                <div class="card-body">
-                    <h5 class="card-title text-center">Dead by Deadlight</h5>
-                </div>
-            </div>
-        </div>
+    <div class="top-games-card-group">
+      <div>
+          <div class="card w-10, h-10">
+              <img src="./static/images/minecraft.png" alt="Minecraft" style="width: 250px; height: 250px;">
+              <div class="card-body">
+                  <h5 class="card-title text-center">Minecraft</h5>
+              </div>
+          </div>
       </div>
+      <div>
+          <div class="card w-10, h-10">
+              <img src="./static/images/animal_crossing.png" alt="Animal Crossing: Wii" style="width: 250px; height: 250px;">
+              <div class="card-body">
+                  <h5 class="card-title text-center">Animal Crossing: Wii</h5>
+              </div>
+          </div>
+      </div>
+      <div>
+          <div class="card w-10, h-10">
+              <img src="./static/images/dead_by_daylight.png" alt="Dead by Daylight" style="width: 250px; height: 250px;">
+              <div class="card-body">
+                  <h5 class="card-title text-center">Dead by Deadlight</h5>
+              </div>
+          </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+      <h5 class="card-title bio-title vapor-color">{{ current_user.first_name }}'s Reviews</h5>
+    </div>
+
   </div>
-  <div class="card-body">
-   
 </div>
-  </div>
 </div>
+  
 {% endblock %}
