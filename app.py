@@ -47,6 +47,7 @@ bcrypt = Bcrypt(app)
 # with app.app_context():
     #print("____________________WITH CONTEXT_____________________")
 
+
     # api_calls.populate_tags()
     # api_calls.populate_games(500)
     # all_tags = tag_repository_singleton.get_all_tags()
@@ -63,7 +64,10 @@ bcrypt = Bcrypt(app)
     # api_calls.search_db("Fortnite")
     # api_calls.fast_search_db("Project")
 
-    # print("____________________________________________________")
+
+
+    #print("____________________________________________________")
+
 
 # app name
 @app.errorhandler(404)
@@ -87,13 +91,17 @@ def internal(e):
 
 @app.get('/')
 def index():
+    if 'user' in session:
+        profile_path=session['user']['profile_path']
+    else:
+        profile_path= None
     highest_rated = game_repository_singleton.get_highest_rating()
-
 
     #ourpicks = fortnite, skyrim, valorant, portal 2, dishonored, fallout new vegas
     our_picks = []
     user_favorite = [] 
-    return render_template('index.html', highest_rated = highest_rated, our_picks = our_picks, user_favorite = user_favorite)
+    return render_template('index.html', highest_rated = highest_rated, our_picks = our_picks, user_favorite = user_favorite, profile_path=profile_path)
+   
 
 @app.route('/header')
 def header():
@@ -101,7 +109,11 @@ def header():
 
 @app.get('/about')
 def about():
-    return render_template('about.html')
+    if 'user' in session:
+        profile_path=session['user']['profile_path']
+    else:
+        profile_path= None
+    return render_template('about.html', profile_path=profile_path)
 
 @app.get('/search')
 def search():
@@ -109,31 +121,67 @@ def search():
     api_calls.search_db(q)
     search_result_array = game_repository_singleton.search_games_by_title(title = q)
     search_result_array_length = len(search_result_array)
-    return render_template('search.html', results_found = search_result_array_length, search_results=search_result_array, search_query=q)
+    if 'user' in session:
+        profile_path=session['user']['profile_path']
+    else:
+        profile_path= None
+    return render_template('search.html', results_found = search_result_array_length, search_results=search_result_array, search_query=q, profile_path=profile_path)
 
 offset = 0
 @app.get('/all_games')
 def all_games():
+    if 'user' in session:
+        profile_path=session['user']['profile_path']
+    else:
+        profile_path= None
     
     all_games_result = game_repository_singleton.get_all_games()
     search_result_array_length = len(all_games_result)
-    return render_template('all_games.html', results_found = search_result_array_length, search_results = all_games_result)
-    
+    return render_template('all_games.html', results_found = search_result_array_length, search_results = all_games_result, profile_path=profile_path)
 
 #kaitlyn is doing things and crying while dylan watches and judges 
 @app.get('/profile')
 def profile():
-    current_page = "profile"
+    if 'user' not in session:
+        return redirect('/login')
     #TODO: get the current session user STATUS: Done
     # current_user = User.query.filter_by(user_id=session['user']['user_id']).first() OLD
     current_user = user_repository_singleton.get_user_by_id(user_id=session['user']['user_id'])
+    
+    profile_path=session['user']['profile_path']
+    
     #print(current_user.username)
     #TODO: If the user isnt logged in, dont let them go to the profile page STATUS: Almost Complete
     #getting a Key Error
+    return render_template('profile.html', current_user=current_user, profile_path=profile_path)
+    
+
+
+
+@app.get('/post_review')
+def post_review():    
+    if 'user' in session:
+        profile_path=session['user']['profile_path']
+    else:
+        profile_path= None
+    return render_template('post_review.html', profile_path=profile_path)
+
+
+@app.get('/gamepage')
+
+def gamepage():
+    current_page = "gamepage"
+    if 'user' in session:
+        profile_path=session['user']['profile_path']
+    else:
+        profile_path= None
+    #single_game = game_repository.get_game_by_id(game_id)
+    #existing_game = Game.query.filter_by(single_game=single_game).first()
+    #existing_game=existing_game
     reviews = review_repository_singleton.get_review_by_author(current_user.user_id)
     print(reviews)
     #  existing_user = user_repository_singleton.get_user_by_email(email=email) #type: ignore
-    return render_template('profile.html', current_user=current_user, profile_path=session['user']['profile_path'], reviews=reviews)
+    return render_template('profile.html', current_user=current_user, profile_path=session['user']['profile_path'], reviews=reviews, profile_path=profile_path)
 
 # @app.get('/post_review')
 # def post_review():    
@@ -183,7 +231,11 @@ def post_review(game_id):
 
 @app.get('/login')
 def login():
-    return render_template('login.html')
+    if 'user' in session:
+        profile_path=session['user']['profile_path']
+    else:
+        profile_path= None
+    return render_template('login.html', profile_path=profile_path)
 
 @app.post('/login')
 def loginform():
@@ -222,7 +274,11 @@ def temp():
 @app.get('/register')
 def register():
     current_page = "register"
-    return render_template('register.html')
+    if 'user' in session:
+        profile_path=session['user']['profile_path']
+    else:
+        profile_path= None
+    return render_template('register.html', profile_path=profile_path)
 
 #found some errors in register. login should work fine when these are fixed
 @app.post('/register')
@@ -301,7 +357,11 @@ def registerForm():
 
 @app.get('/resetPassword')
 def resetPassword():
-    return render_template('resetPassword.html')
+    if 'user' in session:
+        profile_path=session['user']['profile_path']
+    else:
+        profile_path= None
+    return render_template('resetPassword.html', profile_path=profile_path)
 
 @app.get('/logout')
 def logout():

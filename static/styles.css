@@ -27,7 +27,14 @@
     padding: 10px;
 }
 
+.vapor-img {
+    border-radius: 25px;
+    width: 200px;
+    height: 200px;
+}
+
 .pfp-image-circle {
+    border: 3px solid #969896;
     border-radius: 50%;
     width: 150px;
     height:150px;
@@ -51,12 +58,19 @@
 }
 
 #user_symbol {
-    border: 3px solid #8abeb7;
-    background-color: #8abeb7;
     border-radius: 50%;
     width: 35px;
     height: 35px;
     margin: auto;
+    text-align: center;
+}
+
+#pfp_symbol {
+    
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin:auto;
     text-align: center;
 }
 
@@ -74,6 +88,12 @@
 
 .gray-color{
     color: #969896;
+}
+
+
+.pfp-border {
+    border: 3px solid #969896;
+    border-radius: 10px;
 }
 
 .glide-container{
