@@ -30,6 +30,7 @@ class ReviewRepository:
         return matches
 
     def create_review(self, author_id:int, game_id:int, review_date:date, rating_score:int, description:str) -> review:
+
         exists = db.session.query(review.review_id).filter_by(game_id = game_id, author_id = author_id).first()
         if (exists is not None):
             return exists

@@ -222,9 +222,11 @@ def gamepage(game_id):
     #existing_game = Game.query.filter_by(single_game=single_game).first()
     return render_template('gamepage.html', current_game=current_game, current_user=current_user, profile_path=session['user']['profile_path'], reviews_length=reviews_length, reviews=reviews) 
 
+
 @app.post('/<game_id>')
 def post_review(game_id):
     current_game = game_repository_singleton.get_game_by_id(game_id)
+
     current_user = user_repository_singleton.get_user_by_id(user_id=session['user']['user_id'])
     #print(f'current user is',current_user)
 
@@ -241,7 +243,6 @@ def post_review(game_id):
 
     # current_user = user_repository_singleton.get_user_by_id(
     #     user_id=session['user']['user_id'])
-
     #new_review.author_id = current_user.user_id
     #new_review.game_id = current_game.game_id
     #current_game.user_rating.append(new_review)
