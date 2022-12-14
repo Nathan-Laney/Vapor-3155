@@ -277,6 +277,11 @@ def logout():
     flash('You have been logged out')
     return redirect('flashPage')
 
+@app.post('/reset')
+def resetPass():
+    flash('You will get an email to reset your password in the next 2-10 buisness days')
+    return redirect('resetPassword')
+
 if __name__ == '__main__':
     app.run()
 
