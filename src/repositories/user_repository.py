@@ -34,5 +34,12 @@ class UserRepository:
             db.session.add(one_user)
             db.session.commit()
             return one_user
+
+    def delete_user(self, user_id: int): 
+        found_user: user_data = user_data.query.get_or_404(user_id)
+        db.session.delete(user_data)
+        db.session.commit()
+        return True
+
 # Singleton to be used in other modules
 user_repository_singleton = UserRepository()
