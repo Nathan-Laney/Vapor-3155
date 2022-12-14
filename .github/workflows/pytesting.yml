@@ -16,7 +16,6 @@ env:
   IGDB_CLIENT_ID : 'nnmpkjm8cks3623ypg6d9j68f3b8rq'
   IGDB_CLIENT_SECRET : 'w01q5virehfbuoaguo9lvuduhts7dj'   
 
-
 jobs:
   build:
 

@@ -254,9 +254,11 @@ def post_review(game_id):
     user_rating = request.form.get('rating', type=int)
     today = date.today()
     #print(f'review is',user_review)
-
-    if user_rating < 0 or user_rating > 5:
-        abort(400)
+    try:
+        if user_rating < 0 or user_rating > 5:
+            abort(400)
+    except Exception:
+        pass
 
     #create_review(self, author_id:int, game_id:int, review_date:date, rating_score:int, description:str)    
     new_review = review_repository_singleton.create_review(current_user.user_id, current_game.game_id, today, user_rating, user_review)
