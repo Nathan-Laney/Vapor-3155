@@ -89,7 +89,6 @@ def internal(e):
 def index():
     highest_rated = game_repository_singleton.get_highest_rating()
 
-
     #ourpicks = fortnite, skyrim, valorant, portal 2, dishonored, fallout new vegas
     our_picks = []
     user_favorite = [] 
