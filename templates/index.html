@@ -1,54 +1,120 @@
 {% extends '_layout.html' %}
 
 {% block body %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.2.0/glide.js" integrity="sha512-vZGsugWaSqQZuW8N5Z3ild7Tk8NqiZjKffeIQGpnnIs6g7HVZaFZjlLKPIw1qDsrQ5KAxAGfBinglQWu6i/8DA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
 <h2 class="p-2">highest rated games</h2>
-
 <div class="row p-5">
-  {% for num in range (1,7) %}
-    <div class="col-sm-2">
-      <div class="card w-65" >
-        
-        <img src="/static/images/portal.jpeg" alt="portal">
-        <div class="card-body">
-          <h5 class="card-title text-center">Portal</h5>
-          <p class="card-text text-center">4.9/5</p>
-        </div>
+  
+  <div class="glide-container">
+    <div class="glide-high">
+      <div class="glide__track" data-glide-el="track">
+        <ul class="glide__slides">
+          {% for i in range(19) %}
+          <li class="glide__slide">
+            <a href="/{{game_id}}">
+              <img src="{{highest_rated[i]['thumbnail_link']}}" alt='{{highest_rated[i]["title"]}}'>
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
       </div>
-    </div>
+      <div class="glide__arrows" data-glide-el="controls">
+        <button class="glide__arrow glide__arrow--left game-card__btn game-card__btn-prev" data-glide-dir="<">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+          </svg>
+        </button>
+        <button class="glide__arrow glide__arrow--right game-card__btn game-card__btn-next" data-glide-dir=">">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+          </svg>
+        </button>
+      </div>
 
-{% endfor %}
+    </div>
+</div>
 </div>
 <h2 class="p-2">our picks</h2>
 <div class="row p-5">
-  {% for num in range (1,7) %}
-
-    <div class="col-sm-2">
-      <div class="card w-65" >
-        
-        <img src="/static/images/portal.jpeg" alt="portal">
-        <div class="card-body">
-          <h5 class="card-title text-center">Portal</h5>
-          <p class="card-text text-center">4.9/5</p>
-        </div>
+  
+  <div class="glide-container">
+    <div class="glide">
+      <div class="glide__track" data-glide-el="track">
+        <ul class="glide__slides">
+          {% for i in range(19) %}
+          <li class="glide__slide">
+              <img src="{{highest_rated[i]['thumbnail_link']}}" alt='{{highest_rated[i]["title"]}}'>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="glide__arrows" data-glide-el="controls">
+        <button class="glide__arrow glide__arrow--left game-card__btn game-card__btn-prev" data-glide-dir="<">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+          </svg>
+        </button>
+        <button class="glide__arrow glide__arrow--right game-card__btn game-card__btn-next" data-glide-dir=">">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+          </svg>
+        </button>
       </div>
     </div>
-
-{% endfor %}
 </div>
-<h2 class="p-2">your backlog</h2>
-<div class="row p-5">
-  {% for num in range (1,7) %}
-    <div class="col-sm-2">
-      <div class="card w-65" >
+</div>
+
+
+    <script>
+      var sliders = document.querySelectorAll('.glide');
+      // var glide = new Glide(sliders)
+      for (var i = 0; i < sliders.length; i++) {
+      var glide = new Glide(sliders[i], {
+        // options
+        type: 'carousel',
+        autoplay: 5000,
+        hoverpause: true,
+        gap: 50,
+        focusAt: 'center',
+        startAt: 0,
+        perView: 4,
+        breakpoints: {
+          1024:{
+            perView: 2
+          },
+          480:{
+            perView: 1
+          }
+          }
         
-        <img src="/static/images/portal.jpeg" alt="portal">
-        <div class="card-body">
-          <h5 class="card-title text-center">Portal</h5>
-          <p class="card-text text-center">4.9/5</p>
-        </div>
-      </div>
-    </div>
-
-{% endfor %}
-</div>
-{% endblock %}
+      });
+    } 
+    var highSliders = document.querySelectorAll('.glide-high');
+      // var glide = new Glide(sliders)
+      for (var i = 0; i < highSliders.length; i++) {
+      var highGlide = new Glide(highSliders[i], {
+        // options
+        type: 'carousel',
+        autoplay: 5000,
+        hoverpause: true,
+        gap: 50,
+        focusAt: 'center',
+        startAt: 0,
+        perView: 4,
+        breakpoints: {
+          1024:{
+            perView: 2
+          },
+          480:{
+            perView: 1
+          }
+          }
+      });
+    } 
+      highGlide.mount()
+      glide.mount()
+    
+    </script>
+    {% endblock %}
