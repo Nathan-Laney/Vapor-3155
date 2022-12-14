@@ -8,7 +8,7 @@ class review(db.Model):  # type: ignore
     review_id =             db.Column(db.Integer, primary_key=True)
     author_id =             db.Column(db.Integer, primary_key=False)
     game_id =               db.Column(db.Integer, primary_key=False)
-    date =                  db.Column(db.DateTime, nullable=False)
+    review_date =           db.Column(db.DateTime, nullable=False)
     rating_score =          db.Column(db.Integer, nullable=False)
     replayability_score =   db.Column(db.Integer, nullable=True)
     graphics_score =        db.Column(db.Integer, nullable=True)

@@ -24,6 +24,11 @@ class ReviewRepository:
         found_reviews: review = review.query.get_or_404(review_id)
         return found_reviews
 
+    def get_review_by_author(self, author_id: int) -> review:
+        matches: review = review.query.filter_by(author_id=author_id).all()
+        #user_id=sessionUser.user_id
+        return matches
+
     def create_review(self, author_id:int, game_id:int, date:date, rating_score:int, description:str) -> review:
         exists = db.session.query(review.review_id).filter_by(game_id = game_id, author_id = author_id).first()
         if (exists is not None):
