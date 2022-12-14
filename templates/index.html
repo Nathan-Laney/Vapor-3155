@@ -13,7 +13,9 @@
       <ul class="glide__slides">
         {% for i in range(19) %}
         <li class="glide__slide">
+          <a href="/{{highest_rated[i]['game_id']}}">
             <img src="{{highest_rated[i]['thumbnail_link']}}" alt='{{highest_rated[i]["title"]}}'>
+          </a>
         </li>
         {% endfor %}
       </ul>
@@ -40,9 +42,11 @@
     <div class="glide" id="glide2">
       <div class="glide__track" data-glide-el="track">
         <ul class="glide__slides">
-          {% for i in range(19) %}
+          {% for i in range(12) %}
           <li class="glide__slide">
-              <img src="{{highest_rated[i]['thumbnail_link']}}" alt='{{highest_rated[i]["title"]}}'>
+            <a href="/{{our_picks[i]['game_id']}}">
+              <img src="{{our_picks[i]['thumbnail_link']}}" alt='{{our_picks[i]["title"]}}'>
+            </a>
           </li>
           {% endfor %}
         </ul>

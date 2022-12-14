@@ -96,12 +96,32 @@ def index():
     else:
         profile_path= None
     highest_rated = game_repository_singleton.get_highest_rating()
-
-    #ourpicks = fortnite, skyrim, valorant, portal 2, dishonored, fallout new vegas
     our_picks = []
+    
+    our_picks.append(game_repository_singleton.get_game_by_id(1905))
+    our_picks.append(game_repository_singleton.get_game_by_id(472))
+    our_picks.append(game_repository_singleton.get_game_by_id(1164))
+    our_picks.append(game_repository_singleton.get_game_by_id(72))
+    our_picks.append(game_repository_singleton.get_game_by_id(11118))
+    our_picks.append(game_repository_singleton.get_game_by_id(16))
+    our_picks.append(game_repository_singleton.get_game_by_id(121))
+    our_picks.append(game_repository_singleton.get_game_by_id(2181))
+    our_picks.append(game_repository_singleton.get_game_by_id(533))
+    our_picks.append(game_repository_singleton.get_game_by_id(7360))
+    # our_picks.append(game_repository_singleton.get_game_by_id(2704))
+    # our_picks.append(game_repository_singleton.get_game_by_id(18866))
+    our_picks.append(game_repository_singleton.get_game_by_id(1372))
+    our_picks.append(game_repository_singleton.get_game_by_id(2132))
+    # our_picks.append(game_repository_singleton.get_game_by_id(2688))
+    our_picks.append(game_repository_singleton.get_game_by_id(109462))
+    # our_picks.append(game_repository_singleton.get_game_by_id(88894))
+    # our_picks.append(game_repository_singleton.get_game_by_id(125174))
+    # our_picks.append(game_repository_singleton.get_game_by_id(26765))
+    # our_picks.append(game_repository_singleton.get_game_by_id(11529))
+
     user_favorite = [] 
     return render_template('index.html', highest_rated = highest_rated, our_picks = our_picks, user_favorite = user_favorite, profile_path=profile_path)
-   
+
 
 @app.route('/header')
 def header():
