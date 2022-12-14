@@ -24,11 +24,13 @@
 
     <div class="d-inline-flex">
       <div class="card" style="width:18em">
+        <a href="/{{search_results[i]['game_id']}}">
         <img class="card-img-top" src="{{search_results[i]['thumbnail_link']}}" alt='{{search_results[i]["title"]}}'>
         <div class="card-body">
           <h5 class="card-title text-center">{{search_results[i]["title"]}}</h5>
           <p class="card-text text-center">{{search_results[i]["developer"]}}</p>
         </div>
+        </a>
       </div>
     </div>
 

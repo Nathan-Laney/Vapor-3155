@@ -295,6 +295,111 @@ def search_db(query:str): #Now far, far faster
 
     return result_json
 
+
+def all_games(amount:int):
+    game_id = ""
+    title = ""
+    publisher = ""
+    description = ""
+    developer = ""
+    thumbnail_link = ""
+    release_date = date.today()
+    global keys
+    global client_id
+    global expires_on
+    rating = 00.0
+
+    # Authorize the keys, but only when you need to 
+    if (time.time() > expires_on - 60):
+        keys = authorize()
+    
+    # Gens the header for use in requests
+    headers = {
+        'Client-ID': client_id,
+        'Authorization': 'Bearer ' + keys['access_token']
+    }
+
+    # What we request from the API
+    data = f'fields *, involved_companies.*, involved_companies.company.*, cover.*, genres.*, themes.*; where total_rating_count > 0; sort total_rating_count desc; limit {amount};'
+    # Send the POST request to the API
+    result = requests.post('https://api.igdb.com/v4/games/', data=data, headers=headers )
+    # Convert the results into a JSON object
+    result_json = result.json()
+
+    for searchResult in result_json:
+
+        # GAME_ID
+        game_id = searchResult["id"]
+
+        # TITLE
+        title = searchResult["name"]
+
+        # FIRST 1000 CHARS OF DESCRIPTION (if exists)
+        try:
+            descriptionLong = searchResult["summary"]
+            description = (descriptionLong[:996] + '...') if len(descriptionLong) > 996 else descriptionLong
+        except Exception:
+            pass
+
+        # RELEASE DATE (if exists)
+        try:
+            release_date = date.fromtimestamp(searchResult["first_release_date"])  # RELEASE DATE
+        except Exception:
+            pass
+
+        # COVER ART (if exists)
+        try:
+            thumbnail_link = "https://images.igdb.com/igdb/image/upload/t_cover_big/" + searchResult["cover"]["image_id"] + ".png"  
+        except Exception:
+            pass
+
+        # PUBLISHER AND DEVELOPER (if exists)
+        try:
+            for involvedCompany in searchResult["involved_companies"]:
+                if (involvedCompany["publisher"]): 
+                    try:
+                        publisher = involvedCompany["company"]["name"]         # PUBLISHER
+                    except Exception:
+                        pass
+                if (involvedCompany["developer"]):
+                    try:
+                        developer = involvedCompany["company"]["name"]         # DEVELOPER
+                    except Exception:
+                        pass
+        except Exception:
+            pass
+
+        # RATING
+        try: 
+            rating = 00.0
+            if (searchResult["total_rating_count"] > 0):
+                # print("adding rating: " + str(searchResult["total_rating"]))
+                rating = float(searchResult["total_rating"])
+        except Exception as e:
+            pass
+
+
+        print("adding id: " + str(game_id) + ", title: " + str(title))
+        game_repository_singleton.create_game(game_id, title, publisher, description, developer, thumbnail_link, release_date, rating)
+
+        # GENRES (if exists)
+        # TODO: AUTO CREATE THEME IF DOES NOT EXIST IN TAGS TABLE
+        try:
+            for genre in searchResult['genres']:
+                tag_game_repository_singleton.create_tag_game(genre["id"], searchResult['id'])
+        except Exception:
+            pass
+
+        # THEMES (if exists)
+        # TODO: AUTO CREATE THEME IF DOES NOT EXIST IN TAGS TABLE
+        try:
+            for theme in searchResult['themes']:
+                tag_game_repository_singleton.create_tag_game(theme["id"], searchResult['id'])
+        except Exception:
+            pass
+
+    return result_json
+
 # def search_db(query:str):                 # OLD AND FAR WORSE
 #     game_id = ""
 #     title = ""
