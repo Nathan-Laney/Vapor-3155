@@ -27,7 +27,7 @@ def test_db_connection(test_app: FlaskClient):
         assert res.publisher == "Nathan"
         assert res.thumbnail_link == ''
         assert res.title == "TESTING_GAME_DATA"
-        assert res.rating == 99
+        assert res.rating == 0
 
         res = game_repository.game_repository_singleton.delete_game(9999999)
         assert res is True
