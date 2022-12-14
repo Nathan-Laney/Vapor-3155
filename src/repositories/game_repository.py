@@ -63,6 +63,11 @@ class GameRepository:
             db.session.commit()
             return one_game
     
+    def delete_game(self, user_id: int): 
+        found_user: game = game.query.get_or_404(user_id)
+        db.session.delete(game)
+        db.session.commit()
+        return True
 
 # Singleton to be used in other modules
 game_repository_singleton = GameRepository()
