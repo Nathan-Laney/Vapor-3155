@@ -11,6 +11,17 @@
 
     <!-- Link our custom CSS file -->
     <link rel="stylesheet" href="../static/styles.css"> <!-- TODO: Ensure this link is referencing the file correctly -->
+
+    <title>vapor</title>
+    <link rel="icon" type="image/x-icon" href="./static/images/favicon.ico">
+
+
+    <!-- glide.js thangs -->
+    <!-- Required Core Stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.2.0/css/glide.core.css" integrity="sha512-ShLuspGzRsTiMlQ2Rg0e+atjy/gVQr3oYKnKmQkHQ6sxcnDAEOtOaPz2rRmeygV2CtnwUawDyHkGgH4zUbP3Hw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Optional Theme Stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.2.0/css/glide.theme.css" integrity="sha512-Cn5/xnOLSKjVpNCsJZCtgQhxp00FcFnlRwgbSG7WGFq1BVvyG+LoOarjXAq//8Vstyu0Na9wvEKLWR67/wAy3w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -18,7 +29,7 @@
     <div id="header">{% include "header.html" %}</div>
     
     <!-- Body Content -->
-    <div class="container pt-4">
+    <div class="container pt-4" >
             {% block body %}{% endblock %}
     </div>
     
@@ -35,5 +46,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+
 </body>
 </html>
