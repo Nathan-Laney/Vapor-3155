@@ -36,27 +36,39 @@
                 <div class="card-body p-1">
                     <div class="d-flex flex-start w-100 mt-3">
                     <!-- pfp -->
-                    <img class="rounded-circle shadow-1-strong me-3"
+                    <img class="rounded-circle shadow-1-strong me-3 ml-2"
                         src="./static/profile-pics/{{ profile_path }}" alt="pfp" width="60"
                         height="60" />
                     <!-- write your review -->
-                    <div class="w-100">
+                    <form action="/{{ current_game.game_id }}" method="post" class="mt-1 ml-2">
+                    <div class="w-100 ml-1">
                         <h5>leave a review</h5>
                         <div class="form-group">
-                        <textarea class="form-control" id="textAreaExample" rows="4"></textarea>
+                        <textarea class="form-control" name="review" id="review" rows="4" cols="110"></textarea>
                         <div class="mt-4">
-                        <label class="form-label" for="rating">rating</label>
-                        <input class="form-label" type="number" id="rating" name="rating" autocomplete="off" min="1" max="5">    
+                        <label for="rating" class="form-label">rating</label>
+                        <input type="number" class="form-label" id="rating" name="rating" autocomplete="off" min="1" max="5">    
                     </div>
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button class="btn btn-success me-md-2" type="button">submit</button>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mr-1">
+                        <button class="btn btn-secondary me-md-2" type="submit">submit</button>
                     </div>
                     </div>
                     </div>
+                </form>
                 </div>
             </div>
         </div>
 
+        <!--list all reviews for game-->
+        {% for i in range(0, reviews_length) %} 
+            <div class="card w-10, h-10 mb-3">
+                <div class="card-body">
+                    <h6 class="card-title text-left">{{ current_user.username }}</h6>
+                    <p class="card-text text-left">{{ reviews[i]["description"] }}</p>
+                    <p class="card-text text-left"><strong>rating:</strong> {{ reviews[i]["rating_score"] }}</p> 
+                </div>
+            </div>
+        {% endfor %}
         
         
         <!-- stand-in reviews 

@@ -29,12 +29,13 @@ class ReviewRepository:
         #user_id=sessionUser.user_id
         return matches
 
-    def create_review(self, author_id:int, game_id:int, date:date, rating_score:int, description:str) -> review:
+    def create_review(self, author_id:int, game_id:int, review_date:date, rating_score:int, description:str) -> review:
+
         exists = db.session.query(review.review_id).filter_by(game_id = game_id, author_id = author_id).first()
         if (exists is not None):
             return exists
         else:
-            new_review = review(date=date, rating_score=rating_score, description = description)
+            new_review = review(review_date=review_date, rating_score=rating_score, description = description, author_id=author_id, game_id=game_id)
             db.session.add(new_review)
             db.session.commit()
             return new_review
