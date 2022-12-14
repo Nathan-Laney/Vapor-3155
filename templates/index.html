@@ -6,46 +6,47 @@
 
 <h2 class="p-2">highest rated games</h2>
 <div class="row p-5">
-  
-  <div class="glide-container">
-    <div class="glide-high">
-      <div class="glide__track" data-glide-el="track">
-        <ul class="glide__slides">
-          {% for i in range(19) %}
-          <li class="glide__slide">
-            <a href="/{{game_id}}">
-              <img src="{{highest_rated[i]['thumbnail_link']}}" alt='{{highest_rated[i]["title"]}}'>
-            </a>
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-      <div class="glide__arrows" data-glide-el="controls">
-        <button class="glide__arrow glide__arrow--left game-card__btn game-card__btn-prev" data-glide-dir="<">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-          </svg>
-        </button>
-        <button class="glide__arrow glide__arrow--right game-card__btn game-card__btn-next" data-glide-dir=">">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-          </svg>
-        </button>
-      </div>
 
+<div class="glide-container">
+  <div class="glide" id="glide1">
+    <div class="glide__track" data-glide-el="track">
+      <ul class="glide__slides">
+        {% for i in range(19) %}
+        <li class="glide__slide">
+          <a href="/{{highest_rated[i]['game_id']}}">
+            <img src="{{highest_rated[i]['thumbnail_link']}}" alt='{{highest_rated[i]["title"]}}'>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
     </div>
+    <div class="glide__arrows" data-glide-el="controls">
+      <button class="glide__arrow glide__arrow--left game-card__btn game-card__btn-prev" data-glide-dir="<">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+        </svg>
+      </button>
+      <button class="glide__arrow glide__arrow--right game-card__btn game-card__btn-next" data-glide-dir=">">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
 </div>
 </div>
 <h2 class="p-2">our picks</h2>
 <div class="row p-5">
   
   <div class="glide-container">
-    <div class="glide">
+    <div class="glide" id="glide2">
       <div class="glide__track" data-glide-el="track">
         <ul class="glide__slides">
-          {% for i in range(19) %}
+          {% for i in range(12) %}
           <li class="glide__slide">
-              <img src="{{highest_rated[i]['thumbnail_link']}}" alt='{{highest_rated[i]["title"]}}'>
+            <a href="/{{our_picks[i]['game_id']}}">
+              <img src="{{our_picks[i]['thumbnail_link']}}" alt='{{our_picks[i]["title"]}}'>
+            </a>
           </li>
           {% endfor %}
         </ul>
@@ -71,7 +72,10 @@
       var sliders = document.querySelectorAll('.glide');
       // var glide = new Glide(sliders)
       for (var i = 0; i < sliders.length; i++) {
-      var glide = new Glide(sliders[i], {
+        console.log(`#${sliders[i].getAttribute('id')}`);
+
+      var glide = new Glide(`#${sliders[i].getAttribute('id')}`, {
+        
         // options
         type: 'carousel',
         autoplay: 5000,
@@ -90,31 +94,7 @@
           }
         
       });
+      glide.mount();
     } 
-    var highSliders = document.querySelectorAll('.glide-high');
-      // var glide = new Glide(sliders)
-      for (var i = 0; i < highSliders.length; i++) {
-      var highGlide = new Glide(highSliders[i], {
-        // options
-        type: 'carousel',
-        autoplay: 5000,
-        hoverpause: true,
-        gap: 50,
-        focusAt: 'center',
-        startAt: 0,
-        perView: 4,
-        breakpoints: {
-          1024:{
-            perView: 2
-          },
-          480:{
-            perView: 1
-          }
-          }
-      });
-    } 
-      highGlide.mount()
-      glide.mount()
-    
     </script>
     {% endblock %}
