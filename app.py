@@ -48,8 +48,8 @@ with app.app_context():
     #print("____________________WITH CONTEXT_____________________")
     print("____________________WITH CONTEXT_____________________")
 
-    api_calls.populate_tags()
-    api_calls.populate_games(500)
+    # api_calls.populate_tags()
+    # api_calls.populate_games(500)
     # all_tags = tag_repository_singleton.get_all_tags()
     # print(all_tags)
     # for i in all_tags:
@@ -112,9 +112,14 @@ def search():
     search_result_array_length = len(search_result_array)
     return render_template('search.html', results_found = search_result_array_length, search_results=search_result_array, search_query=q)
 
+offset = 0
 @app.get('/all_games')
 def all_games():
-    return render_template('all_games.html')
+    
+    all_games_result = game_repository_singleton.get_all_games()
+    search_result_array_length = len(all_games_result)
+    return render_template('all_games.html', results_found = search_result_array_length, search_results = all_games_result)
+    
 
 #kaitlyn is doing things and crying while dylan watches and judges 
 @app.get('/profile')
