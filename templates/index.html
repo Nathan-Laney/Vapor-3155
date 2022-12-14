@@ -11,65 +11,13 @@
     <div class="glide-high">
       <div class="glide__track" data-glide-el="track">
         <ul class="glide__slides">
+          {% for i in range(19) %}
           <li class="glide__slide">
-            <!-- <div class="game-card"> -->
-              <img src="/static/images/blackops.jpeg" class="game-card__icon">
-              <h4 class="game-card__title">
-                Portal
-              </h4>
-              <p class="game-card__intro">
-                5
-              </p>
-            <!-- </div> -->
+            <a href="/{{game_id}}">
+              <img src="{{highest_rated[i]['thumbnail_link']}}" alt='{{highest_rated[i]["title"]}}'>
+            </a>
           </li>
-          <li class="glide__slide">
-            <!-- <div class="game-card"> -->
-              <img src="/static/images/minecraft.png" class="game-card__icon">
-              <h4 class="game-card__title">
-                minecraft
-              </h4>
-              <p class="game-card__intro">
-                5
-              </p>
-            <!-- </div> -->
-            
-          </li>
-          <li class="glide__slide">
-            <!-- <div class="game-card"> -->
-              <img src="/static/images/dead_by_daylight.png" class="game-card__icon">
-              <h4 class="game-card__title">
-                dead_by_daylight
-              </h4>
-              <p class="game-card__intro">
-                5
-              </p>
-            <!-- </div> -->
-            
-          </li>
-          <li class="glide__slide">
-            <!-- <div class="game-card"> -->
-              <img src="/static/images/blackops.jpeg" class="game-card__icon">
-              <h4 class="game-card__title">
-                blackops
-              </h4>
-              <p class="game-card__intro">
-                5
-              </p>
-            <!-- </div> -->
-            
-          </li>
-          <li class="glide__slide">
-            <!-- <div class="game-card"> -->
-              <img src="/static/images/animal_crossing.png" class="game-card__icon">
-              <h4 class="game-card__title">
-                animal_crossing
-              </h4>
-              <p class="game-card__intro">
-                5
-              </p>
-            <!-- </div> -->
-            
-          </li>
+          {% endfor %}
         </ul>
       </div>
       <div class="glide__arrows" data-glide-el="controls">
@@ -84,6 +32,7 @@
           </svg>
         </button>
       </div>
+
     </div>
 </div>
 </div>
@@ -94,65 +43,11 @@
     <div class="glide">
       <div class="glide__track" data-glide-el="track">
         <ul class="glide__slides">
+          {% for i in range(19) %}
           <li class="glide__slide">
-            <div class="game-card">
-              <img src="/static/images/blackops.jpeg" class="game-card__icon">
-              <h4 class="game-card__title">
-                Portal
-              </h4>
-              <p class="game-card__intro">
-                5
-              </p>
-            </div>
+              <img src="{{highest_rated[i]['thumbnail_link']}}" alt='{{highest_rated[i]["title"]}}'>
           </li>
-          <li class="glide__slide">
-            <div class="game-card">
-              <img src="/static/images/minecraft.png" class="game-card__icon">
-              <h4 class="game-card__title">
-                minecraft
-              </h4>
-              <p class="game-card__intro">
-                5
-              </p>
-            </div>
-            
-          </li>
-          <li class="glide__slide">
-            <div class="game-card">
-              <img src="/static/images/dead_by_daylight.png" class="game-card__icon">
-              <h4 class="game-card__title">
-                dead_by_daylight
-              </h4>
-              <p class="game-card__intro">
-                5
-              </p>
-            </div>
-            
-          </li>
-          <li class="glide__slide">
-            <div class="game-card">
-              <img src="/static/images/blackops.jpeg" class="game-card__icon">
-              <h4 class="game-card__title">
-                blackops
-              </h4>
-              <p class="game-card__intro">
-                5
-              </p>
-            </div>
-            
-          </li>
-          <li class="glide__slide">
-            <div class="game-card">
-              <img src="/static/images/animal_crossing.png" class="game-card__icon">
-              <h4 class="game-card__title">
-                animal_crossing
-              </h4>
-              <p class="game-card__intro">
-                5
-              </p>
-            </div>
-            
-          </li>
+          {% endfor %}
         </ul>
       </div>
       <div class="glide__arrows" data-glide-el="controls">
@@ -181,20 +76,19 @@
         type: 'carousel',
         autoplay: 5000,
         hoverpause: true,
-        gap: 25,
+        gap: 50,
         focusAt: 'center',
         startAt: 0,
+        perView: 4,
         breakpoints: {
-          2000:{
-            perView: 4
-          },
           1024:{
-            perView: 3
+            perView: 2
           },
-          600:{
-            perview: 1
+          480:{
+            perView: 1
           }
-        }
+          }
+        
       });
     } 
     var highSliders = document.querySelectorAll('.glide-high');
@@ -205,20 +99,18 @@
         type: 'carousel',
         autoplay: 5000,
         hoverpause: true,
-        gap: 25,
+        gap: 50,
         focusAt: 'center',
         startAt: 0,
+        perView: 4,
         breakpoints: {
-          2000:{
-            perView: 4
-          },
           1024:{
-            perView: 3
+            perView: 2
           },
-          600:{
-            perview: 1
+          480:{
+            perView: 1
           }
-        }
+          }
       });
     } 
       highGlide.mount()

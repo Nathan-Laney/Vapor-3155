@@ -44,11 +44,11 @@ app.secret_key = os.getenv('APP_SECRET_KEY')
 db.init_app(app)
 bcrypt = Bcrypt(app)
 
-with app.app_context():
+# with app.app_context():
     #print("____________________WITH CONTEXT_____________________")
 
-    api_calls.populate_tags()
-    api_calls.populate_games(500)
+    # api_calls.populate_tags()
+    # api_calls.populate_games(500)
     # all_tags = tag_repository_singleton.get_all_tags()
     # print(all_tags)
     # for i in all_tags:
@@ -87,7 +87,7 @@ def internal(e):
 
 @app.get('/')
 def index():
-    highest_rated = review_repository_singleton.get_highest_reviews()
+    highest_rated = game_repository_singleton.get_highest_rating()
 
 
     #ourpicks = fortnite, skyrim, valorant, portal 2, dishonored, fallout new vegas
