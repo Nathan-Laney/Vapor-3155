@@ -9,6 +9,14 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  SQLALCHEMY_DATABASE_URI : "postgresql+psycopg2://nathan:abc123@localhost:5432/Vapor"
+  SQLALCHEMY_DATABASE_URI : "postgresql://vapor_admin:QwWCQUYVceRTTlatAwUamTEjWh4Nbhdu@dpg-cebpv3mn6mprhjquci50-a.ohio-postgres.render.com/vapor"
+  APP_SECRET_KEY : os.urandom(12)
+  BCRYPT_ROUNDS : 5
+  IGDB_CLIENT_ID : 'nnmpkjm8cks3623ypg6d9j68f3b8rq'
+  IGDB_CLIENT_SECRET : 'w01q5virehfbuoaguo9lvuduhts7dj'   
+
 jobs:
   build:
 
