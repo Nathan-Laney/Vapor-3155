@@ -132,3 +132,8 @@
     /* width: inherit; */
     height: 250px;
 }
+
+.btn-dark, .btn-dark:hover, .btn-dark:active, .btn-dark:visited {
+    background-color: #8abeb7 !important;
+    color: black !important;
+}
