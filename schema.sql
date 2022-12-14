@@ -20,8 +20,8 @@ create table if not exists user_data (
 
 create table if not exists review (
     review_id serial unique primary key,
-    author_id serial unique,
-    game_id serial unique,
+    author_id serial,
+    game_id serial,
     review_date date not null, 
     rating_score integer not null, 
     replayability_score integer, 
