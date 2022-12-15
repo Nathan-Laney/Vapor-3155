@@ -15,7 +15,7 @@ def test_api_connection(test_app: FlaskClient):
 def test_db_connection(test_app: FlaskClient):
     with app.app_context():
         # Check that creating games works
-        res = game_repository.game_repository_singleton.create_game(9999999,"TESTING_GAME_DATA", "Nathan", "' or 1=1;", "ADMIN", "", date.today(), 99)
+        res = game_repository.game_repository_singleton.create_game(9999999,"TESTING_GAME_DATA", "Nathan", "' or 1=1;", "ADMIN", "", date.today(), 0)
         assert res is not None
 
         # Check that fetching game info works
@@ -27,7 +27,7 @@ def test_db_connection(test_app: FlaskClient):
         assert res.publisher == "Nathan"
         assert res.thumbnail_link == ''
         assert res.title == "TESTING_GAME_DATA"
-        assert res.rating == 99
+        assert res.rating == 0
 
         res = game_repository.game_repository_singleton.delete_game(9999999)
         assert res is True

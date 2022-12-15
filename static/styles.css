@@ -132,3 +132,20 @@
     /* width: inherit; */
     height: 250px;
 }
+
+.btn-dark, .btn-dark:hover, .btn-dark:active, .btn-dark:visited {
+    background-color: #8abeb7 !important;
+    color: black !important;
+}
+
+a {
+    color: #8abeb7;
+}
+
+a:hover {
+    color:#969896;
+}
+
+.vapor-welcome {
+    text-shadow: 1px 1px 2px #8abeb7, 0 0 1em lightblue, 0 0 0.2em white;
+}

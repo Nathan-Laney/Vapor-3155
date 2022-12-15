@@ -164,7 +164,7 @@ def populate_games(amount:int):
             rating = 00.0
             if (searchResult["total_rating_count"] > 0):
                 # print("adding rating: " + str(searchResult["total_rating"]))
-                rating = float(searchResult["total_rating"])
+                rating = float(searchResult["total_rating"]) / 20 # Divided by 20 to fit a 1 to 5 scale
         except Exception as e:
             pass
 
@@ -269,7 +269,7 @@ def search_db(query:str): #Now far, far faster
             rating = 00.0
             if (searchResult["total_rating_count"] > 0):
                 # print("adding rating: " + str(searchResult["total_rating"]))
-                rating = float(searchResult["total_rating"])
+                rating = float(searchResult["total_rating"]) / 20 # Divided by 20 to fit a 1 to 5 scale
         except Exception as e:
             pass
 
@@ -374,7 +374,7 @@ def all_games(amount:int):
             rating = 00.0
             if (searchResult["total_rating_count"] > 0):
                 # print("adding rating: " + str(searchResult["total_rating"]))
-                rating = float(searchResult["total_rating"])
+                rating = float(searchResult["total_rating"]) / 20 # Divided by 20 to fit a 1 to 5 scale
         except Exception as e:
             pass
 

@@ -5,13 +5,13 @@
 {% block title %}Search Games{% endblock %}
 
 {% block body %}
-<h1 class="mb-5">all games</h1>
+<h1 class="mb-5 vapor-welcome">all games</h1>
 <form action="/search" method="get" class="mb-5">
     <label for="q" class="form-label">search by title</label>
     <div class="input-group">
         <input type="text" name="q" id="q" class="form-control" autocomplete="off" value="">
         <div class="input-group-append">
-            <button type="submit" class="btn btn-primary">search</button>
+            <button type="submit" class="btn btn-dark">search</button>
         </div>
     </div>
 </form>

@@ -5,9 +5,16 @@ name: Python package
 
 on:
   push:
-    branches: [ $default-branch ]
+    branches: [ main ]
   pull_request:
-    branches: [ $default-branch ]
+    branches: [ main ]
+
+env:
+  SQLALCHEMY_DATABASE_URI : ${{secrets.SQLALCHEMY_DATABASE_URI}}
+  APP_SECRET_KEY : ${{secrets.APP_SECRET_KEY}}
+  BCRYPT_ROUNDS : ${{secrets.BCRYPT_ROUNDS}}
+  IGDB_CLIENT_ID : ${{secrets.IGDB_CLIENT_ID}}
+  IGDB_CLIENT_SECRET :  ${{secrets.IGDB_CLIENT_SECRET}}
 
 jobs:
   build:
