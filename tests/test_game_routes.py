@@ -12,6 +12,11 @@ def test_index(test_app: FlaskClient):
     page_data = res.data
     assert res.status_code == 200
 
+def test_carousel(test_app: FlaskClient):
+    res = test_app.get('/')
+    page_data = res.data
+    assert b'<img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co1wz4.png" alt="The Witcher 3: Wild Hunt - Game of the Year Edition">'
+
 def test_about(test_app: FlaskClient):
     # about
     res = test_app.get('/about')
