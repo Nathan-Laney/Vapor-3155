@@ -108,7 +108,7 @@ def index():
     our_picks.append(game_repository_singleton.get_game_by_id(2181))
     our_picks.append(game_repository_singleton.get_game_by_id(533))
     our_picks.append(game_repository_singleton.get_game_by_id(7360))
-    # our_picks.append(game_repository_singleton.get_game_by_id(2704))
+    # our_picks.append(game_repository_singleton.search_games_by_title('Valorant'))
     # our_picks.append(game_repository_singleton.get_game_by_id(18866))
     our_picks.append(game_repository_singleton.get_game_by_id(1372))
     our_picks.append(game_repository_singleton.get_game_by_id(2132))
