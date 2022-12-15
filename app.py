@@ -232,6 +232,7 @@ def createGame():
 @app.get('/<game_id>')
 def gamepage(game_id):
     current_game = game_repository_singleton.get_game_by_id(game_id)
+    passed_rating =  str(round(current_game.rating, 2))
     current_user = user_repository_singleton.get_user_by_id(user_id=session['user']['user_id'])
     profile_path=session['user']['profile_path']
 
@@ -241,7 +242,7 @@ def gamepage(game_id):
 
     #single_game = game_repository.get_game_by_id(game_id)
     #existing_game = Game.query.filter_by(single_game=single_game).first()
-    return render_template('gamepage.html', current_game=current_game, current_user=current_user, profile_path=session['user']['profile_path'], reviews_length=reviews_length, reviews=reviews) 
+    return render_template('gamepage.html', current_game=current_game, current_user=current_user, profile_path=session['user']['profile_path'], reviews_length=reviews_length, reviews=reviews, passed_rating=passed_rating) 
 
 
 @app.post('/<game_id>')
