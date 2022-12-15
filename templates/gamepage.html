@@ -9,7 +9,7 @@
       <img class="card-img-top" src="{{ current_game.thumbnail_link }}" alt='{{ current_game.title }}'>
       <div class="card-body">
         <h5 class="card-title text-center">{{ current_game.title }}</h5>
-        <p class="card-text text-center">{{ current_game.rating }}</p>
+        <p class="card-text text-center">{{ passed_rating }}</p>
       </div>
     </div>
     <!-- game info -->
@@ -23,7 +23,7 @@
         <h5>tags: </h5>
         <p>{{ current_game.tags }}</p>
         <h5>rating: </h5>
-        <p>{{ current_game.rating }}</p>
+        <p>{{ passed_rating }}</p>
     </div>
 </div>
 
